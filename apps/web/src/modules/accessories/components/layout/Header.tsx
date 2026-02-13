@@ -8,15 +8,9 @@ const Header: React.FC = () => {
           Chemical Glasses
         </h1>
         <nav className="hidden md:flex gap-6">
-          <a href="#" className="text-indigo-600 font-semibold">
-            Simulator
-          </a>
-          <a href="#" className="text-slate-500 font-semibold">
-            Safety Specs
-          </a>
-          <a href="#" className="text-slate-500 font-semibold">
-            Catalog
-          </a>
+          <a href="#" className="text-indigo-600 font-semibold"> Simulator </a>
+          <a href="#" className="text-slate-500 font-semibold"> Safety Specs </a>
+          <a href="#" className="text-slate-500 font-semibold"> Catalog </a>
         </nav>
       </div>
     </header>
