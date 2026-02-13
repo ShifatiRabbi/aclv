@@ -1,79 +1,57 @@
 
-import { Equipment } from './types';
+import type { Chemical } from './types';
 
-export const laboratoryEquipment: Equipment[] = [
-  {
-    id: 'beaker',
-    title: 'Beaker',
-    category: 'Glassware',
-    material: 'Borosilicate Glass 3.3',
-    lab_usage: 'Mixing, heating, and stirring liquids in school and research labs.',
-    description: 'Low-form beaker with spout for easy pouring. Used for approximate volume measurements.',
-    measurements: [
-      { capacity_ml: 50, height_mm: 60, diameter_mm: 42, graduation_step_ml: 10, svg_scale_factor: 1.0 },
-      { capacity_ml: 100, height_mm: 70, diameter_mm: 50, graduation_step_ml: 20, svg_scale_factor: 1.2 },
-      { capacity_ml: 250, height_mm: 95, diameter_mm: 70, graduation_step_ml: 50, svg_scale_factor: 1.5 },
-      { capacity_ml: 500, height_mm: 120, diameter_mm: 85, graduation_step_ml: 100, svg_scale_factor: 1.8 },
-      { capacity_ml: 1000, height_mm: 145, diameter_mm: 105, graduation_step_ml: 100, svg_scale_factor: 2.2 }
-    ]
-  },
-  {
-    id: 'erlenmeyer',
-    title: 'Erlenmeyer Flask',
-    category: 'Glassware',
-    material: 'Borosilicate Glass 3.3',
-    lab_usage: 'Titration, boiling, and storage of liquids.',
-    description: 'Conical flask with a flat bottom and cylindrical neck. Ideal for swirling liquids without spilling.',
-    measurements: [
-      { capacity_ml: 50, height_mm: 85, diameter_mm: 51, graduation_step_ml: 10, svg_scale_factor: 1.0, neck_diameter_mm: 22 },
-      { capacity_ml: 100, height_mm: 105, diameter_mm: 64, graduation_step_ml: 20, svg_scale_factor: 1.2, neck_diameter_mm: 22 },
-      { capacity_ml: 250, height_mm: 145, diameter_mm: 85, graduation_step_ml: 50, svg_scale_factor: 1.5, neck_diameter_mm: 34 },
-      { capacity_ml: 500, height_mm: 180, diameter_mm: 105, graduation_step_ml: 100, svg_scale_factor: 1.8, neck_diameter_mm: 34 },
-      { capacity_ml: 1000, height_mm: 220, diameter_mm: 131, graduation_step_ml: 100, svg_scale_factor: 2.2, neck_diameter_mm: 42 }
-    ]
-  },
-  {
-    id: 'measuring_cylinder',
-    title: 'Measuring Cylinder',
-    category: 'Glassware',
-    material: 'Borosilicate Glass 3.3',
-    lab_usage: 'Precise volume measurement of liquids.',
-    description: 'Tall, narrow cylinder with a hexagonal base for stability. Features highly accurate graduation lines.',
-    measurements: [
-      { capacity_ml: 50, height_mm: 195, diameter_mm: 25, graduation_step_ml: 1, svg_scale_factor: 1.0 },
-      { capacity_ml: 100, height_mm: 250, diameter_mm: 30, graduation_step_ml: 1, svg_scale_factor: 1.2 },
-      { capacity_ml: 250, height_mm: 330, diameter_mm: 40, graduation_step_ml: 2, svg_scale_factor: 1.5 },
-      { capacity_ml: 500, height_mm: 380, diameter_mm: 53, graduation_step_ml: 5, svg_scale_factor: 1.8 },
-      { capacity_ml: 1000, height_mm: 460, diameter_mm: 67, graduation_step_ml: 10, svg_scale_factor: 2.2 }
-    ]
-  },
-  {
-    id: 'volumetric_flask',
-    title: 'Volumetric Flask',
-    category: 'Glassware',
-    material: 'Borosilicate Glass 3.3',
-    lab_usage: 'Preparation of precise molar solutions.',
-    description: 'Flat bottomed flask with a long neck and a single calibration mark. Calibrated at 20°C.',
-    measurements: [
-      { capacity_ml: 50, height_mm: 140, diameter_mm: 48, graduation_step_ml: 50, svg_scale_factor: 1.0, neck_diameter_mm: 13 },
-      { capacity_ml: 100, height_mm: 170, diameter_mm: 60, graduation_step_ml: 100, svg_scale_factor: 1.2, neck_diameter_mm: 13 },
-      { capacity_ml: 250, height_mm: 220, diameter_mm: 80, graduation_step_ml: 250, svg_scale_factor: 1.5, neck_diameter_mm: 16 },
-      { capacity_ml: 500, height_mm: 260, diameter_mm: 100, graduation_step_ml: 500, svg_scale_factor: 1.8, neck_diameter_mm: 19 },
-      { capacity_ml: 1000, height_mm: 300, diameter_mm: 125, graduation_step_ml: 1000, svg_scale_factor: 2.2, neck_diameter_mm: 24 }
-    ]
-  },
-  {
-    id: 'test_tube',
-    title: 'Test Tube',
-    category: 'Glassware',
-    material: 'Borosilicate Glass 3.3',
-    lab_usage: 'Qualitative chemical reactions and small-scale heating.',
-    description: 'Finger-like length of glass tubing, open at the top and with a rounded U-shaped bottom.',
-    measurements: [
-      { capacity_ml: 10, height_mm: 75, diameter_mm: 12, graduation_step_ml: 2, svg_scale_factor: 0.8 },
-      { capacity_ml: 20, height_mm: 150, diameter_mm: 16, graduation_step_ml: 5, svg_scale_factor: 1.0 },
-      { capacity_ml: 30, height_mm: 150, diameter_mm: 18, graduation_step_ml: 10, svg_scale_factor: 1.2 },
-      { capacity_ml: 50, height_mm: 200, diameter_mm: 25, graduation_step_ml: 10, svg_scale_factor: 1.5 }
-    ]
-  }
+export const CHEMICAL_LIBRARY: Chemical[] = [
+  { id: '1', name: 'Sodium', formula: 'Na', state: 'solid', color: '#cbd5e1', molecularWeight: 22.99, solubility: 0 },
+  { id: '2', name: 'Potassium', formula: 'K', state: 'solid', color: '#94a3b8', molecularWeight: 39.10, solubility: 0 },
+  { id: '3', name: 'Copper Sulfate', formula: 'CuSO₄', state: 'powder', color: '#3b82f6', molecularWeight: 159.61, solubility: 32 },
+  { id: '4', name: 'Sodium Chloride', formula: 'NaCl', state: 'powder', color: '#ffffff', molecularWeight: 58.44, solubility: 36 },
+  { id: '5', name: 'Hydrochloric Acid', formula: 'HCl', state: 'liquid', color: '#e2e8f0', molecularWeight: 36.46, solubility: 100 },
+  { id: '6', name: 'Sulfuric Acid', formula: 'H₂SO₄', state: 'liquid', color: '#f1f5f9', molecularWeight: 98.08, solubility: 100 },
+  { id: '7', name: 'Ethanol', formula: 'C₂H₅OH', state: 'liquid', color: '#f8fafc', molecularWeight: 46.07, solubility: 100 },
+  { id: '8', name: 'Ammonia', formula: 'NH₃', state: 'gas', color: '#dcfce7', molecularWeight: 17.03, solubility: 47 },
+  { id: '9', name: 'Iron Powder', formula: 'Fe', state: 'powder', color: '#475569', molecularWeight: 55.85, solubility: 0 },
+  { id: '10', name: 'Chlorine', formula: 'Cl₂', state: 'gas', color: '#fde68a', molecularWeight: 70.90, solubility: 0.7 },
+  { id: '11', name: 'Oxygen', formula: 'O₂', state: 'gas', color: '#bfdbfe', molecularWeight: 32.00, solubility: 0.004 },
+  { id: '12', name: 'Nitrogen', formula: 'N₂', state: 'gas', color: '#e0f2fe', molecularWeight: 28.01, solubility: 0.002 },
+  { id: '13', name: 'Calcium Carbonate', formula: 'CaCO₃', state: 'powder', color: '#f3f4f6', molecularWeight: 100.09, solubility: 0.001 },
+  { id: '14', name: 'Potassium Permanganate', formula: 'KMnO₄', state: 'powder', color: '#7e22ce', molecularWeight: 158.03, solubility: 6.4 },
+  { id: '15', name: 'Silver Nitrate', formula: 'AgNO₃', state: 'powder', color: '#f8fafc', molecularWeight: 169.87, solubility: 216 },
+  { id: '16', name: 'Barium Chloride', formula: 'BaCl₂', state: 'powder', color: '#ffffff', molecularWeight: 208.23, solubility: 35.8 },
+  { id: '17', name: 'Magnesium', formula: 'Mg', state: 'solid', color: '#94a3b8', molecularWeight: 24.31, solubility: 0 },
+  { id: '18', name: 'Mercury', formula: 'Hg', state: 'liquid', color: '#64748b', molecularWeight: 200.59, solubility: 0 },
+  { id: '19', name: 'Bromine', formula: 'Br₂', state: 'liquid', color: '#991b1b', molecularWeight: 159.81, solubility: 3.5 },
+  { id: '20', name: 'Iodine', formula: 'I₂', state: 'solid', color: '#1e1b4b', molecularWeight: 253.81, solubility: 0.03 },
+  { id: '21', name: 'Gold', formula: 'Au', state: 'solid', color: '#fbbf24', molecularWeight: 196.97, solubility: 0 },
+  { id: '22', name: 'Sodium Hydroxide', formula: 'NaOH', state: 'powder', color: '#ffffff', molecularWeight: 40.00, solubility: 109 },
+  { id: '23', name: 'Methane', formula: 'CH₄', state: 'gas', color: '#f8fafc', molecularWeight: 16.04, solubility: 0.002 },
+  { id: '24', name: 'Carbon Dioxide', formula: 'CO₂', state: 'gas', color: '#f8fafc', molecularWeight: 44.01, solubility: 0.14 },
+  { id: '25', name: 'Cobalt(II) Chloride', formula: 'CoCl₂', state: 'powder', color: '#ec4899', molecularWeight: 129.84, solubility: 45 },
+  { id: '26', name: 'Nickel(II) Sulfate', formula: 'NiSO₄', state: 'powder', color: '#10b981', molecularWeight: 154.75, solubility: 38 },
+  { id: '27', name: 'Potassium Dichromate', formula: 'K₂Cr₂O₇', state: 'powder', color: '#f97316', molecularWeight: 294.18, solubility: 12 },
+  { id: '28', name: 'Sodium Bicarbonate', formula: 'NaHCO₃', state: 'powder', color: '#ffffff', molecularWeight: 84.01, solubility: 9.6 },
+  { id: '29', name: 'Glucose', formula: 'C₆H₁₂O₆', state: 'powder', color: '#f8fafc', molecularWeight: 180.16, solubility: 91 },
+  { id: '30', name: 'Sucrose', formula: 'C₁₂H₂₂O₁₁', state: 'powder', color: '#ffffff', molecularWeight: 342.30, solubility: 200 },
+  { id: '31', name: 'Glycerin', formula: 'C₃H₈O₃', state: 'liquid', color: '#f8fafc', molecularWeight: 92.09, solubility: 100 },
+  { id: '32', name: 'Acetone', formula: 'C₃H₆O', state: 'liquid', color: '#f1f5f9', molecularWeight: 58.08, solubility: 100 },
+  { id: '33', name: 'Copper(II) Chloride', formula: 'CuCl₂', state: 'powder', color: '#0d9488', molecularWeight: 134.45, solubility: 70 },
+  { id: '34', name: 'Manganese(II) Sulfate', formula: 'MnSO₄', state: 'powder', color: '#fbcfe8', molecularWeight: 151.00, solubility: 52 },
+  { id: '35', name: 'Lead(II) Nitrate', formula: 'Pb(NO₃)₂', state: 'powder', color: '#ffffff', molecularWeight: 331.20, solubility: 52 },
+  { id: '36', name: 'Phosphorus (White)', formula: 'P₄', state: 'solid', color: '#fef3c7', molecularWeight: 123.90, solubility: 0 },
+  { id: '37', name: 'Sulfur', formula: 'S₈', state: 'powder', color: '#facc15', molecularWeight: 256.52, solubility: 0 },
+  { id: '38', name: 'Hydrogen Peroxide', formula: 'H₂O₂', state: 'liquid', color: '#eff6ff', molecularWeight: 34.01, solubility: 100 },
+  { id: '39', name: 'Acetic Acid', formula: 'CH₃COOH', state: 'liquid', color: '#f8fafc', molecularWeight: 60.05, solubility: 100 },
+  { id: '40', name: 'Benzene', formula: 'C₆H₆', state: 'liquid', color: '#f8fafc', molecularWeight: 78.11, solubility: 0.18 },
+  { id: '41', name: 'Potassium Iodide', formula: 'KI', state: 'powder', color: '#ffffff', molecularWeight: 166.00, solubility: 140 },
+  { id: '42', name: 'Calcium Chloride', formula: 'CaCl₂', state: 'powder', color: '#ffffff', molecularWeight: 110.98, solubility: 74 },
+  { id: '43', name: 'Zinc Sulfate', formula: 'ZnSO₄', state: 'powder', color: '#ffffff', molecularWeight: 161.47, solubility: 57 },
+  { id: '44', name: 'Ferrous Sulfate', formula: 'FeSO₄', state: 'powder', color: '#4ade80', molecularWeight: 151.91, solubility: 26 },
+  { id: '45', name: 'Ammonium Nitrate', formula: 'NH₄NO₃', state: 'powder', color: '#ffffff', molecularWeight: 80.04, solubility: 150 },
+  { id: '46', name: 'Nitric Acid', formula: 'HNO₃', state: 'liquid', color: '#fef3c7', molecularWeight: 63.01, solubility: 100 },
+  { id: '47', name: 'Argon', formula: 'Ar', state: 'gas', color: '#e2e8f0', molecularWeight: 39.95, solubility: 0.003 },
+  { id: '48', name: 'Neon', formula: 'Ne', state: 'gas', color: '#fee2e2', molecularWeight: 20.18, solubility: 0.001 },
+  { id: '49', name: 'Helium', formula: 'He', state: 'gas', color: '#f8fafc', molecularWeight: 4.00, solubility: 0.0001 },
+  { id: '50', name: 'Lithium', formula: 'Li', state: 'solid', color: '#e2e8f0', molecularWeight: 6.94, solubility: 0 },
+  { id: '51', name: 'Fluorine', formula: 'F₂', state: 'gas', color: '#fef3c7', molecularWeight: 38.00, solubility: 0 },
+  { id: '52', name: 'Xenon', formula: 'Xe', state: 'plasma', color: '#a5b4fc', molecularWeight: 131.29, solubility: 0 },
 ];

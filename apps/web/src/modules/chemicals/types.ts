@@ -1,18 +1,19 @@
-export interface Measurement {
-  capacity_ml: number;
-  height_mm: number;
-  diameter_mm: number;
-  graduation_step_ml: number;
-  svg_scale_factor: number;
-  neck_diameter_mm?: number;
+export type ChemicalState = 'solid' | 'liquid' | 'gas' | 'powder' | 'plasma';
+
+export interface Chemical {
+  id: string;
+  name: string;
+  formula: string;
+  state: ChemicalState;
+  color: string;
+  molecularWeight: number; // g/mol
+  solubility: number; // g per 100ml
+  description?: string;
 }
 
-export interface Equipment {
-  id: string;
-  title: string;
-  category: 'Glassware' | 'Heating & Support';
-  material: string;
-  lab_usage: string;
-  measurements: Measurement[];
-  description: string;
+export interface SimulationState {
+  activeChemical: Chemical;
+  volume: number; // ml
+  mass: number; // grams
+  temperature: number; // Celsius
 }

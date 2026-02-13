@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { api } from './shared/utils/api'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import AccessoriesApp from './modules/accessories/App'
+import ChemicalsApp from './modules/chemicals/App'
 
 function App() {
   const [status, setStatus] = useState('Loading...');
@@ -21,11 +22,13 @@ function App() {
         <nav>
           <Link to="/" className="mx-2">Home</Link>
           <Link to="/accessories" className="mx-2">Accessories</Link>
+          <Link to="/chemicals" className="mx-2">Chemicals</Link>
           {/* Add more links for other modules like chemicals, etc., as needed */}
         </nav>
         <Routes>
           <Route path="/" element={<div>Welcome to the platform. Select a module above.</div>} />
           <Route path="/accessories" element={<AccessoriesApp />} />
+          <Route path="/chemicals" element={<ChemicalsApp />} />
           {/* Add more routes for other modules as needed */}
         </Routes>
       </div>
