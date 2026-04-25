@@ -1,13 +1,4 @@
 
-import React from 'react';
-import Lab from './pages/Lab';
+import VirtualLabApp from './vlab/App'
 
-const App: React.FC = () => {
-  return (
-    <div className="min-h-screen bg-slate-50">
-      <Lab />
-    </div>
-  );
-};
-
-export default App;
+export default VirtualLabApp

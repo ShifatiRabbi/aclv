@@ -1,110 +1,164 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { Chemical } from '../types';
 
 interface BeakerProps {
-  volume: number; // 0 to 1000 ml
-  mass: number;
+  volume: number; // ml
+  mass: number; // g
   chemical: Chemical;
+  isLiquidMode: boolean;
   molarity: number;
 }
 
-const Beaker: React.FC<BeakerProps> = ({ volume, mass, chemical, molarity }) => {
-  // Volume mapping to visual height (max beaker height is 400px)
-  const maxVolume = 600; 
-  const fillHeightPercent = Math.min((volume / maxVolume) * 100, 100);
+const Beaker: React.FC<BeakerProps> = ({ volume, mass, chemical, isLiquidMode, molarity }) => {
+  const currentState = isLiquidMode ? 'liquid' : chemical.naturalState;
   
-  // Calculate solubility limit
-  const solubilityLimit = (chemical.solubility * volume) / 100;
-  const isPrecipitated = chemical.solubility > 0 && mass > solubilityLimit;
+  // Calculate heights and visuals
+  const maxBeakerVolume = 600;
+  const liquidHeightPercent = isLiquidMode ? Math.min((volume / maxBeakerVolume) * 100, 100) : 0;
   
-  // Opacity logic: More solute + less solvent = higher opacity
-  const baseOpacity = 0.1;
-  const saturationFactor = molarity > 0 ? Math.min(0.1 + (molarity / 2), 0.9) : baseOpacity;
-  
-  // Precipitation visual
-  const precipHeight = isPrecipitated ? Math.min(10 + (mass - solubilityLimit) / 10, 40) : 0;
+  // Solubility logic for Liquid Mode
+  const solubilityLimit = (chemical.solubility || 0) * (volume / 100);
+  const isPrecipitated = isLiquidMode && (chemical.solubility || 0) > 0 && mass > solubilityLimit;
+  const precipHeight = isPrecipitated ? Math.min(10 + (mass - solubilityLimit) / 5, 50) : 0;
+
+  // Solid/Powder Height (Based on density)
+  const substanceVolumeCm3 = mass / (chemical.density || 1);
+  const solidHeightPercent = !isLiquidMode && (currentState === 'solid' || currentState === 'powder') 
+    ? Math.min((substanceVolumeCm3 / maxBeakerVolume) * 100 * 5, 20) // Multiplier for visibility
+    : 0;
+
+  // Saturation for liquids
+  const saturationFactor = isLiquidMode ? Math.min(0.1 + (molarity / 1.5), 0.9) : 1;
+
+  // Random particles for gas/plasma
+  const particles = useMemo(() => {
+    return [...Array(currentState === 'gas' || currentState === 'plasma' ? 30 : 0)].map(() => ({
+      left: Math.random() * 90 + 5,
+      top: Math.random() * 90 + 5,
+      size: Math.random() * 4 + 2,
+      duration: Math.random() * 3 + 2,
+      delay: Math.random() * 5
+    }));
+  }, [currentState]);
 
   return (
-    <div className="relative w-72 h-96 mx-auto group">
-      {/* Beaker Glass Body */}
-      <div className="absolute inset-0 rounded-b-3xl border-4 border-slate-300/30 bg-white/10 backdrop-blur-[1px] shadow-2xl overflow-hidden ring-1 ring-white/20">
-        {/* Glass Reflections */}
-        <div className="absolute left-6 top-0 bottom-0 w-1 bg-white/20 blur-[1px]" />
-        <div className="absolute right-10 top-0 bottom-0 w-2 bg-white/5 blur-[2px]" />
+    <div className="relative w-72 h-96 mx-auto">
+      {/* Beaker Container / Sealed Chamber */}
+      <div className={`absolute inset-0 border-4 border-slate-300/30 bg-white/5 backdrop-blur-[1px] shadow-2xl overflow-hidden
+        ${currentState === 'gas' ? 'rounded-3xl border-slate-400/50' : 'rounded-b-3xl'}
+      `}>
+        {/* Glass Detail */}
+        <div className="absolute left-4 top-0 bottom-0 w-1 bg-white/20 blur-[1px]" />
         
-        {/* Measurement Marks */}
-        <div className="absolute left-0 top-0 bottom-0 w-12 flex flex-col justify-between py-8 px-2 pointer-events-none select-none z-20">
+        {/* Measurement Marks (Scale) */}
+        <div className="absolute left-0 top-0 bottom-0 w-12 flex flex-col justify-between py-10 px-2 pointer-events-none z-30">
           {[500, 400, 300, 200, 100, 50].map((mark) => (
             <div key={mark} className="flex items-center gap-2">
-              <div className={`h-[2px] bg-slate-400 ${mark % 100 === 0 ? 'w-4' : 'w-2'}`} />
-              <span className="text-[10px] font-mono text-slate-500 font-bold">{mark}</span>
+              <div className={`h-[2px] bg-slate-400/50 ${mark % 100 === 0 ? 'w-4' : 'w-2'}`} />
+              <span className="text-[9px] font-mono text-slate-500 font-bold">{mark}</span>
             </div>
           ))}
         </div>
 
-        {/* Liquid Layer */}
-        <div 
-          className="absolute bottom-0 left-0 right-0 transition-all duration-700 ease-in-out z-10"
-          style={{ 
-            height: `${fillHeightPercent}%`,
-            backgroundColor: chemical.color,
-            opacity: saturationFactor
-          }}
-        >
-          {/* Meniscus Effect */}
+        {/* GAS Particles (Sealed Chamber) */}
+        {currentState === 'gas' && (
+          <div className="absolute inset-0 bg-blue-50/5">
+             {particles.map((p, i) => (
+              <div 
+                key={i}
+                className="absolute rounded-full animate-pulse transition-all duration-1000"
+                style={{
+                  left: `${p.left}%`,
+                  top: `${p.top}%`,
+                  width: `${p.size}px`,
+                  height: `${p.size}px`,
+                  backgroundColor: chemical.color,
+                  opacity: 0.6,
+                  filter: 'blur(1px)',
+                  animation: `moveRandom ${p.duration}s infinite alternate ease-in-out`
+                }}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* LIQUID Mode / Natural Liquid */}
+        {(currentState === 'liquid' || isLiquidMode) && (
           <div 
-            className="absolute -top-[10px] left-0 right-0 h-5 rounded-[100%] transition-all duration-700"
+            className="absolute bottom-0 left-0 right-0 transition-all duration-700 ease-in-out z-10"
             style={{ 
+              height: `${liquidHeightPercent}%`,
               backgroundColor: chemical.color,
-              filter: 'brightness(1.1)'
+              opacity: saturationFactor
             }}
-          />
-          
-          {/* Particles (Bubbles for gas, granules for powder) */}
-          {chemical.state === 'gas' && (
-            <div className="absolute inset-0 overflow-hidden">
-              {[...Array(15)].map((_, i) => (
-                <div 
-                  key={i}
-                  className="absolute w-1 h-1 bg-white/40 rounded-full animate-bounce"
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    bottom: `-${Math.random() * 20}%`,
-                    animationDuration: `${1 + Math.random() * 3}s`,
-                    animationDelay: `${Math.random() * 2}s`
-                  }}
-                />
-              ))}
-            </div>
-          )}
+          >
+            {/* Liquid Surface / Meniscus */}
+            <div 
+              className="absolute -top-[10px] left-0 right-0 h-5 rounded-[100%] transition-all duration-700"
+              style={{ backgroundColor: chemical.color, filter: 'brightness(1.1)' }}
+            />
+          </div>
+        )}
 
-          {/* Plasma Glow */}
-          {chemical.state === 'plasma' && (
-            <div className="absolute inset-0 bg-blue-400/20 blur-xl animate-pulse" />
-          )}
-        </div>
+        {/* SOLID Chunk Visuals */}
+        {currentState === 'solid' && !isLiquidMode && (
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full flex justify-center items-end gap-1 p-4 z-20">
+             {[...Array(Math.max(1, Math.floor(mass / 10)))].map((_, i) => (
+               <div 
+                key={i}
+                className="w-12 h-12 rotate-12 shadow-inner border border-black/10 transition-all duration-500"
+                style={{ 
+                  backgroundColor: chemical.color, 
+                  clipPath: 'polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)',
+                  transform: `rotate(${Math.sin(i) * 30}deg)`
+                }}
+               />
+             ))}
+          </div>
+        )}
 
-        {/* Precipitation (Solid layer at bottom) */}
-        {isPrecipitated && (
+        {/* POWDER Pile Visuals */}
+        {currentState === 'powder' && !isLiquidMode && (
           <div 
-            className="absolute bottom-0 left-0 right-0 bg-slate-200/80 z-20 transition-all duration-500 border-t border-slate-300"
+            className="absolute bottom-0 left-0 right-0 z-20 transition-all duration-500"
             style={{ 
-              height: `${precipHeight}px`,
+              height: `${Math.max(15, solidHeightPercent)}px`,
               backgroundColor: chemical.color,
-              filter: 'brightness(0.7) contrast(1.2)'
+              clipPath: 'polygon(0% 100%, 100% 100%, 85% 20%, 50% 0%, 15% 20%)',
+              filter: 'brightness(0.9) contrast(1.1)'
             }}
           />
         )}
-        
-        {/* Label on Glass */}
-        <div className="absolute bottom-12 right-6 z-30 opacity-40 select-none">
-          <p className="font-mono text-2xl font-bold text-slate-800 rotate-90 origin-bottom-right">BORO 3.3</p>
-        </div>
+
+        {/* PRECIPITATION (Bottom Layer in Solution) */}
+        {isPrecipitated && (
+          <div 
+            className="absolute bottom-0 left-0 right-0 z-20 transition-all duration-500"
+            style={{ 
+              height: `${precipHeight}px`,
+              backgroundColor: chemical.color,
+              filter: 'brightness(0.6) saturate(1.5)'
+            }}
+          />
+        )}
+
+        {/* PLASMA Glow */}
+        {currentState === 'plasma' && (
+           <div className="absolute inset-0 bg-blue-500/10 blur-3xl animate-pulse" />
+        )}
       </div>
 
-      {/* Spout */}
-      <div className="absolute -top-1 -left-2 w-12 h-6 bg-slate-100 border-4 border-slate-300/30 rounded-full -rotate-[30deg] z-0" />
+      {/* Glass Top / Rim Detail */}
+      <div className={`absolute -top-1 left-1 right-1 h-2 bg-slate-200/20 border-t border-white/30 rounded-full z-40 ${currentState === 'gas' ? 'hidden' : ''}`} />
+      
+      {/* Dynamic CSS for gas motion */}
+      <style>{`
+        @keyframes moveRandom {
+          0% { transform: translate(0, 0); }
+          100% { transform: translate(100px, 100px); }
+        }
+      `}</style>
     </div>
   );
 };

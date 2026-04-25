@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* Theme tokens used by the Virtual Lab UI */
+@theme {
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+  --color-lab-bg: #0A0A0C;
+  --color-lab-panel: #0F0F12;
+  --color-lab-accent: #F27D26;
+  --color-lab-status: #00FF00;
+  --color-lab-titrant: #4DA6FF;
+  --color-lab-analyte: #FF2D92;
+}
+
 body {
   margin: 0;
   background-color: #f8fafc;
