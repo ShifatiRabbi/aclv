@@ -315,23 +315,26 @@ export const GlasswareRenderer: React.FC<GlasswareRendererProps> = ({ equipment,
   };
 
   return (
-    <div style={{ height: `${containerHeight}px` }} className="flex justify-center items-center w-full overflow-hidden bg-white rounded-2xl shadow-inner relative border border-slate-100 p-8">
+    <div
+      style={{ height: `${containerHeight}px` }}
+      className="glass-panel flex justify-center items-center w-full overflow-hidden rounded-3xl relative border border-white/10 p-8 neumorphic-inset"
+    >
       <div className="absolute top-6 left-6 flex flex-col gap-2 z-20">
-        <span className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em]">Engineering Specification</span>
-        <div className="flex items-center gap-4 bg-slate-50/80 backdrop-blur-sm p-3 rounded-lg border border-slate-100 shadow-sm">
+        <span className="text-[10px] font-black text-primary-container uppercase tracking-[0.3em]">Engineering Spec</span>
+        <div className="flex items-center gap-4 bg-black/30 backdrop-blur-sm p-3 rounded-2xl border border-white/10">
           <div className="flex flex-col">
-            <span className="text-[9px] font-bold text-slate-400 uppercase">H (Z-axis)</span>
-            <span className="text-sm font-mono font-bold text-slate-800">{height_mm}mm</span>
+            <span className="text-[9px] font-bold text-white/35 uppercase">H (Z-axis)</span>
+            <span className="text-sm font-mono font-black text-white/85">{height_mm}mm</span>
           </div>
-          <div className="w-px h-8 bg-slate-200"></div>
+          <div className="w-px h-8 bg-white/10"></div>
           <div className="flex flex-col">
-            <span className="text-[9px] font-bold text-slate-400 uppercase">Bore (Ø)</span>
-            <span className="text-sm font-mono font-bold text-slate-800">{diameter_mm}mm</span>
+            <span className="text-[9px] font-bold text-white/35 uppercase">Bore (Ø)</span>
+            <span className="text-sm font-mono font-black text-white/85">{diameter_mm}mm</span>
           </div>
-          <div className="w-px h-8 bg-slate-200"></div>
+          <div className="w-px h-8 bg-white/10"></div>
           <div className="flex flex-col">
-            <span className="text-[9px] font-bold text-slate-400 uppercase">Scale Factor</span>
-            <span className="text-sm font-mono font-bold text-indigo-600">x{scale.toFixed(2)}</span>
+            <span className="text-[9px] font-bold text-white/35 uppercase">Scale</span>
+            <span className="text-sm font-mono font-black text-primary-container">x{scale.toFixed(2)}</span>
           </div>
         </div>
       </div>
@@ -366,7 +369,7 @@ export const GlasswareRenderer: React.FC<GlasswareRendererProps> = ({ equipment,
         
         <text
           x={centerX} y={bottomY + 35}
-          textAnchor="middle" fontSize="10" fontWeight="bold" fill="#94a3b8"
+          textAnchor="middle" fontSize="10" fontWeight="bold" fill="rgba(245, 222, 211, 0.35)"
           className="select-none tracking-widest uppercase opacity-60"
         >
           {equipment.material}

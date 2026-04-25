@@ -8,7 +8,7 @@ interface Props {
 
 const Specifications: React.FC<Props> = ({ equipment }) => {
   return (
-    <div className="bg-white p-6 rounded-2xl border shadow-sm space-y-4">
+    <div className="glass-panel p-6 rounded-3xl border border-white/10 neumorphic-outset space-y-4">
       <InfoCard label="Material" value={equipment.material} />
       <InfoCard label="Laboratory Usage" value={equipment.lab_usage} />
       <InfoCard label="Description" value={equipment.description} />

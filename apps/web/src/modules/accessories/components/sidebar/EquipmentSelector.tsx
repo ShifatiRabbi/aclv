@@ -13,14 +13,14 @@ const EquipmentSelector: React.FC<Props> = ({
   onChange,
 }) => {
   return (
-    <div className="bg-white p-6 rounded-2xl border shadow-sm">
-      <label className="block text-sm font-bold mb-2">
+    <div className="glass-panel p-6 rounded-3xl border border-white/10 neumorphic-outset">
+      <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-3">
         Select Equipment
       </label>
       <select
         value={selectedId}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full border rounded-lg px-3 py-2"
+        className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-3 text-sm text-white/80 focus:outline-none focus:ring-1 focus:ring-primary-container/60"
       >
         {equipmentList.map((eq) => (
           <option key={eq.id} value={eq.id}>

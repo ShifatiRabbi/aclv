@@ -13,8 +13,8 @@ const CapacitySelector: React.FC<Props> = ({
   onSelect,
 }) => {
   return (
-    <div className="bg-white p-6 rounded-2xl border shadow-sm">
-      <label className="block text-sm font-bold mb-3">
+    <div className="glass-panel p-6 rounded-3xl border border-white/10 neumorphic-outset">
+      <label className="block text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-4">
         Capacity (ml)
       </label>
       <div className="grid grid-cols-3 gap-2">
@@ -22,10 +22,10 @@ const CapacitySelector: React.FC<Props> = ({
           <button
             key={m.capacity_ml}
             onClick={() => onSelect(m.capacity_ml)}
-            className={`py-2 rounded-lg border ${
+            className={`py-2 rounded-xl border text-xs font-bold tracking-wider transition-all ${
               selectedCapacity === m.capacity_ml
-                ? "bg-indigo-600 text-white"
-                : "bg-white"
+                ? "bg-primary-container text-on-primary-container border-primary-container/40"
+                : "bg-white/[0.03] text-white/70 border-white/10 hover:border-primary-container/30 hover:text-white"
             }`}
           >
             {m.capacity_ml} ml
