@@ -1,8 +1,32 @@
 @import "tailwindcss";
 
+/* Import Material Icons */
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+/* Material Icons base styles */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
 /* Theme tokens used by the Virtual Lab UI */
 @theme {
-  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 
@@ -13,6 +37,7 @@
   --color-on-surface-variant: #e0c0b0;
   --color-surface-container: #291d16;
   --color-surface-container-highest: #40322a;
+  --color-surface-container-low: #251912;
   --color-outline: #a78b7d;
   --color-outline-variant: #584236;
 
@@ -32,7 +57,11 @@
 
 body {
   margin: 0;
-  background-color: #f8fafc;
+  background-color: #1c110b;
+  color: #f5ded3;
+  overflow-x: hidden;
+  min-height: 100dvh;
+  font-family: 'Inter', sans-serif;
 }
 
 @layer utilities {
@@ -55,8 +84,12 @@ body {
     background-size: 40px 40px;
   }
 
-  .animate-marquee {
-    animation: marquee 30s linear infinite;
+  .glow-orange {
+    box-shadow: 0 0 20px rgba(255, 122, 24, 0.4);
+  }
+
+  .orange-glow {
+    filter: drop-shadow(0 0 8px rgba(255, 122, 24, 0.4));
   }
 }
 

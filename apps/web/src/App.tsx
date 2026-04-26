@@ -1,27 +1,26 @@
 import { useEffect, useState } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import { api } from './shared/utils/api'
-import { BrowserRouter, Routes, Route, Link, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import AccessoriesApp from './modules/accessories/App'
 import ChemicalsApp from './modules/chemicals/App'
+import HomePage from './modules/public/pages/HomePage'
+import MarqueeBar from './modules/public/components/MarqueeBar'
+import TopNavbar from './modules/public/components/TopNavbar'
+import Footer from './modules/public/components/Footer'
+import MobileBottomNav from './modules/public/components/MobileBottomNav'
+import FAB from './modules/public/components/FAB'
 
 function ShellLayout({ status }: { status: string }) {
   return (
-    <div className="container mt-5 text-center">
-      <h1 className="text-2xl font-bold text-blue-600">Advanced Chemical Lab Visualization</h1>
-      <p className="mt-3">{status}</p>
-      <nav>
-        <Link to="/" className="mx-2">
-          Home
-        </Link>
-        <Link to="/accessories" className="mx-2">
-          Accessories
-        </Link>
-        <Link to="/chemicals" className="mx-2">
-          Chemicals
-        </Link>
-      </nav>
-      <Outlet />
+    <div className="min-h-screen bg-background text-on-surface font-body-md">
+      <MarqueeBar />
+      <TopNavbar />
+      <main className="pt-28 overflow-x-hidden">
+        <Outlet context={{ status }} />
+      </main>
+      <Footer />
+      <MobileBottomNav />
+      <FAB />
     </div>
   )
 }
@@ -38,14 +37,18 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Full-screen modules */}
+        {/* Full-screen modules without shell */}
         <Route path="/chemicals/*" element={<ChemicalsApp />} />
 
-        {/* Default shell */}
+        {/* Default shell with new design */}
         <Route element={<ShellLayout status={status} />}>
-          <Route path="/" element={<div>Welcome to the platform. Select a module above.</div>} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/accessories" element={<AccessoriesApp />} />
-          <Route path="*" element={<div>Not found.</div>} />
+          <Route path="/simulations" element={<div className="p-8 text-center text-slate-400">Simulations page coming soon.</div>} />
+          <Route path="/inventory" element={<div className="p-8 text-center text-slate-400">Inventory page coming soon.</div>} />
+          <Route path="/analysis" element={<div className="p-8 text-center text-slate-400">Analysis page coming soon.</div>} />
+          <Route path="/documentation" element={<div className="p-8 text-center text-slate-400">Documentation page coming soon.</div>} />
+          <Route path="*" element={<div className="p-8 text-center text-slate-400">Page not found.</div>} />
         </Route>
       </Routes>
     </BrowserRouter>
