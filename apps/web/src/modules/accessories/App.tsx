@@ -55,7 +55,7 @@ const App: React.FC = () => {
                   Explore Equipment
                 </a>
                 <a
-                  href="/chemicals"
+                  href="/vlab"
                   className="glass-panel px-8 py-4 rounded-full font-bold uppercase tracking-wider border border-white/20 hover:bg-white/10 transition-all"
                 >
                   Start Simulation

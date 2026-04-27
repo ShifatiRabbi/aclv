@@ -1,16 +1,16 @@
-export type ChemicalState = 'solid' | 'powder' | 'liquid' | 'gas' | 'plasma';
+export type ChemicalState = 'solid' | 'powder' | 'liquid' | 'gas';
 
 export interface Chemical {
   id: string;
   name: string;
   formula: string;
-  naturalState: ChemicalState;
+  state: ChemicalState;
   color: string;
   molecularWeight: number; // g/mol
   density?: number; // g/cm³
   solubility?: number; // g per 100ml H₂O
-  description: string;
-  allowsLiquidView: boolean;
+  description?: string;
+  allowsLiquidView?: boolean;
 }
 
 export interface SimulationState {

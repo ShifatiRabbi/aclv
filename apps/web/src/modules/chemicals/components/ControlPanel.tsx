@@ -55,7 +55,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
         </div>
 
         {/* Volume Slider (Visible only in Liquid Mode or for specific states) */}
-        {(isLiquidMode || chemical.naturalState === 'liquid') && (
+        {(isLiquidMode || chemical.state === 'liquid') && (
           <div>
             <div className="flex justify-between items-center mb-3">
               <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Solvent Volume (ml)</label>

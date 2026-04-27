@@ -14,6 +14,8 @@ export interface ChemicalDoc {
   cost?: number
   hazards: string[]
   molarity?: number
+  description?: string
+  allowsLiquidView?: boolean
 }
 
 const ChemicalSchema = new mongoose.Schema<ChemicalDoc>(
@@ -28,7 +30,9 @@ const ChemicalSchema = new mongoose.Schema<ChemicalDoc>(
     solubility: { type: Number },
     cost: { type: Number },
     hazards: { type: [String], default: [] },
-    molarity: { type: Number }
+    molarity: { type: Number },
+    description: { type: String },
+    allowsLiquidView: { type: Boolean }
   },
   { timestamps: true }
 )

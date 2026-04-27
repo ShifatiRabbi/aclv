@@ -22,10 +22,10 @@ const Footer: React.FC = () => {
             Protocols
           </h4>
           <ul className="space-y-3">
-            <li><Link to="/simulations" className="text-slate-600 hover:text-orange-400 text-sm transition-colors">Inorganic Chem</Link></li>
-            <li><Link to="/simulations" className="text-slate-600 hover:text-orange-400 text-sm transition-colors">Organic Synthesis</Link></li>
-            <li><Link to="/simulations" className="text-slate-600 hover:text-orange-400 text-sm transition-colors">Physical Dynamics</Link></li>
-            <li><Link to="/simulations" className="text-slate-600 hover:text-orange-400 text-sm transition-colors">Analytical Labs</Link></li>
+            <li><Link to="/vlab" className="text-slate-600 hover:text-orange-400 text-sm transition-colors">Inorganic Chem</Link></li>
+            <li><Link to="/vlab" className="text-slate-600 hover:text-orange-400 text-sm transition-colors">Organic Synthesis</Link></li>
+            <li><Link to="/vlab" className="text-slate-600 hover:text-orange-400 text-sm transition-colors">Physical Dynamics</Link></li>
+            <li><Link to="/vlab" className="text-slate-600 hover:text-orange-400 text-sm transition-colors">Analytical Labs</Link></li>
           </ul>
         </div>
         

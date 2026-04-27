@@ -1,6 +1,6 @@
 import React from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { api } from '../../../shared/utils/api'
+import { api } from '../../shared/utils/api'
 import { Home } from './pages/Home'
 import { Selection } from './pages/Selection'
 import { LabArea } from './components/Lab/LabArea'
@@ -19,8 +19,8 @@ export default function VirtualLabApp() {
   React.useEffect(() => {
     api
       .get('/chemicals')
-      .then((res) => setAllChemicals(res.data.chemicals ?? []))
-      .catch((err) => console.error('Chemical fetch error', err))
+      .then((res: { data?: { chemicals?: unknown[] } }) => setAllChemicals((res.data?.chemicals as any[]) ?? []))
+      .catch((err: unknown) => console.error('Chemical fetch error', err))
   }, [setAllChemicals])
 
   const handleReset = () => resetLab()

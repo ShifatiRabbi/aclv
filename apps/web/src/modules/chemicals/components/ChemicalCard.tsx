@@ -20,8 +20,7 @@ const ChemicalCard: React.FC<ChemicalCardProps> = ({ chemical, isActive, onClick
     >
       <div className="flex justify-between items-start mb-1">
         <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-blue-400 transition-colors">
-          {/* Fix: Using naturalState instead of state to match Chemical interface */}
-          {chemical.naturalState}
+          {chemical.state}
         </span>
         <div 
           className="w-3 h-3 rounded-full border border-slate-200" 

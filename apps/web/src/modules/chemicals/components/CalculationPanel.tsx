@@ -16,7 +16,7 @@ const CalculationPanel: React.FC<CalculationPanelProps> = ({
   molarity, 
   isLiquidMode 
 }) => {
-  const currentState = isLiquidMode ? 'liquid' : chemical.naturalState;
+  const currentState = isLiquidMode ? 'liquid' : chemical.state;
   const moles = mass / chemical.molecularWeight;
   const volumeLiters = volume / 1000;
 
@@ -32,7 +32,7 @@ const CalculationPanel: React.FC<CalculationPanelProps> = ({
         <div className="flex items-center gap-3">
           <div className={`w-2 h-6 rounded-full ${isLiquidMode ? 'bg-blue-500' : 'bg-emerald-500'}`} />
           <h2 className="text-lg font-bold text-white">
-            {isLiquidMode ? 'Solution Math' : `${chemical.naturalState.toUpperCase()} Properties`}
+            {isLiquidMode ? 'Solution Math' : `${chemical.state.toUpperCase()} Properties`}
           </h2>
         </div>
         <span className="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-400">STP MODE</span>

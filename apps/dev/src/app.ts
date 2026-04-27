@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import './config/db.ts'
+import { connectDb } from './config/db.ts'
 import chemicalsRouter from './routes/chemicals.ts'
 import reactionsRouter from './routes/reactions.ts'
 import { seedLabDataIfEmpty } from './seed/seedLabData.ts'
@@ -23,13 +23,19 @@ app.get('/api/health', (_, res) => {
 app.use('/api/chemicals', chemicalsRouter)
 app.use('/api/reactions', reactionsRouter)
 
-// Seed in dev if DB is empty (safe no-op if already seeded)
-seedLabDataIfEmpty().catch((err) => {
-  console.error('Lab data seed failed', err)
-})
+async function bootstrap() {
+  try {
+    await connectDb()
+    await seedLabDataIfEmpty()
+  } catch (err) {
+    console.error('Startup failed', err)
+  }
 
-app.listen(PORT, () => {
-  console.log(`Server running on  http://localhost:${PORT}`)
-})
+  app.listen(PORT, () => {
+    console.log(`Server running on  http://localhost:${PORT}`)
+  })
+}
+
+bootstrap()
 
 export default app

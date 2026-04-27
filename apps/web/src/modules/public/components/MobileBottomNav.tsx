@@ -7,7 +7,7 @@ const MobileBottomNav: React.FC = () => {
   const navItems = [
     { path: '/', icon: 'home', label: 'Home' },
     { path: '/inventory', icon: 'inventory_2', label: 'Inventory' },
-    { path: '/simulations', icon: 'biotech', label: 'Sims' },
+    { path: '/vlab', icon: 'biotech', label: 'VLab' },
     { path: '/analysis', icon: 'analytics', label: 'Data' },
     { path: '/accessories', icon: 'settings', label: 'Config' },
   ];

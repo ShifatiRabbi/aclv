@@ -1,4 +1,11 @@
+import { Routes, Route, Navigate } from 'react-router-dom'
+import Lab from './pages/Lab'
 
-import VirtualLabApp from './vlab/App'
-
-export default VirtualLabApp
+export default function ChemicalsApp() {
+  return (
+    <Routes>
+      <Route path="/" element={<Lab />} />
+      <Route path="*" element={<Navigate to="/chemicals" replace />} />
+    </Routes>
+  )
+}

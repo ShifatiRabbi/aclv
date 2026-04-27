@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from 'motion/react'
 import { ArrowLeft, Beaker, Pipette, ChevronRight } from 'lucide-react'
 import { useLabStore } from '../store/useLabStore'
-import { api } from '../../../../shared/utils/api'
+import { api } from '../../../shared/utils/api'
 import type { Experiment } from '../types'
 
 interface SelectionProps {
@@ -17,8 +17,10 @@ export const Selection: React.FC<SelectionProps> = ({ onBack, onSelect }) => {
     if (allExperiments.length > 0) return
     api
       .get('/reactions')
-      .then((res) => setAllExperiments(res.data.experiments ?? []))
-      .catch((err) => console.error('Failed to load experiments', err))
+      .then((res: { data?: { experiments?: unknown[] } }) =>
+        setAllExperiments((res.data?.experiments as any[]) ?? [])
+      )
+      .catch((err: unknown) => console.error('Failed to load experiments', err))
   }, [allExperiments.length, setAllExperiments])
 
   const handleSelect = (exp: Experiment) => {

@@ -5,8 +5,9 @@ const TopNavbar: React.FC = () => {
   const location = useLocation();
   
   const navLinks = [
-    { path: '/simulations', label: 'Simulations' },
-    { path: '/inventory', label: 'Inventory' },
+    { path: '/vlab', label: 'VLab' },
+    { path: '/chemicals', label: 'Chemicals' },
+    { path: '/accessories', label: 'Accessories' },
     { path: '/analysis', label: 'Analysis' },
     { path: '/documentation', label: 'Documentation' },
   ];
@@ -39,11 +40,11 @@ const TopNavbar: React.FC = () => {
       
       <div className="flex items-center gap-4">
         <Link
-          to="/simulations"
+          to="/vlab"
           className="hidden md:block bg-primary-container text-on-primary-container font-label-md px-6 py-2.5 rounded-full text-xs neumorphic-outset hover:shadow-[0_0_15px_rgba(255,122,24,0.3)] transition-all active:scale-95 uppercase tracking-wider"
           style={{ fontFamily: "'Space Grotesk', sans-serif" }}
         >
-          START SIMULATION
+          OPEN VLAB
         </Link>
         <button className="md:hidden text-on-surface p-2 rounded-full hover:bg-white/5 active:scale-95 transition-all">
           <span className="material-symbols-outlined">menu</span>

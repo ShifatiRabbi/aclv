@@ -7,21 +7,21 @@ const modules = [
     title: 'Titration Analysis',
     description: 'Automated volumetric analysis with high-precision droplet control and real-time pH tracking.',
     progress: 'w-2/3',
-    link: '/simulations',
+    link: '/vlab',
   },
   {
     icon: 'search',
     title: 'Ion Detection',
     description: 'Advanced analytical methods for qualitative and quantitative detection of cationic and anionic species.',
     progress: 'w-1/2',
-    link: '/simulations',
+    link: '/vlab',
   },
   {
     icon: 'bolt',
     title: 'Reaction Kinetics',
     description: 'Dynamic thermodynamics modeling of exothermic and endothermic chemical processes under varying conditions.',
     progress: 'w-full',
-    link: '/simulations',
+    link: '/vlab',
   },
 ];
 

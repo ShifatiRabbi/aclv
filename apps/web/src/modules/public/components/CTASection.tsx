@@ -8,7 +8,7 @@ const CTASection: React.FC = () => {
         Start Your Virtual Lab <span className="text-primary-container">Journey</span> Today
       </h2>
       <Link
-        to="/simulations"
+        to="/vlab"
         className="inline-flex bg-primary-container text-on-primary-container px-10 py-5 rounded-full text-lg uppercase tracking-[0.2em] neumorphic-outset hover:drop-shadow-[0_0_30px_rgba(255,122,24,0.5)] transition-all active:scale-95"
         style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
       >

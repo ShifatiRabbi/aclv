@@ -1,0 +1,61 @@
+{
+  "chemicals": [
+    {
+      "id": "hcl_01m",
+      "name": "Hydrochloric Acid",
+      "formula": "HCl",
+      "state": "liquid",
+      "color": "rgba(255, 255, 255, 0.1)",
+      "molarity": 0.1,
+      "molecularWeight": 36.46,
+      "density": 1.05,
+      "cost": 10,
+      "hazards": ["corrosive", "skin irritant", "respiratory irritant"]
+    },
+    {
+      "id": "naoh_01m",
+      "name": "Sodium Hydroxide",
+      "formula": "NaOH",
+      "state": "liquid",
+      "color": "rgba(77, 166, 255, 0.2)",
+      "molarity": 0.1,
+      "molecularWeight": 40.0,
+      "density": 1.04,
+      "cost": 12,
+      "hazards": ["corrosive", "severe skin burns", "eye damage"]
+    },
+    {
+      "id": "agno3_solid",
+      "name": "Silver Nitrate",
+      "formula": "AgNO3",
+      "state": "powder",
+      "color": "#FFFFFF",
+      "molecularWeight": 169.87,
+      "density": 4.35,
+      "solubility": 216,
+      "cost": 150,
+      "hazards": ["oxidizer", "toxic"]
+    },
+    {
+      "id": "nacl_solid",
+      "name": "Sodium Chloride",
+      "formula": "NaCl",
+      "state": "powder",
+      "color": "#F0F0F0",
+      "molecularWeight": 58.44,
+      "density": 2.16,
+      "solubility": 36,
+      "cost": 2,
+      "hazards": []
+    },
+    {
+      "id": "phenolphthalein",
+      "name": "Phenolphthalein",
+      "formula": "C20H14O4",
+      "state": "liquid",
+      "color": "transparent",
+      "cost": 25,
+      "hazards": []
+    }
+  ]
+}

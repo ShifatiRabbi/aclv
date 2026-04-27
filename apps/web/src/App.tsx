@@ -3,6 +3,7 @@ import { api } from './shared/utils/api'
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import AccessoriesApp from './modules/accessories/App'
 import ChemicalsApp from './modules/chemicals/App'
+import VlabApp from './modules/vlab/App'
 import HomePage from './modules/public/pages/HomePage'
 import MarqueeBar from './modules/public/components/MarqueeBar'
 import TopNavbar from './modules/public/components/TopNavbar'
@@ -39,12 +40,13 @@ function App() {
       <Routes>
         {/* Full-screen modules without shell */}
         <Route path="/chemicals/*" element={<ChemicalsApp />} />
+        <Route path="/vlab/*" element={<VlabApp />} />
 
         {/* Default shell with new design */}
         <Route element={<ShellLayout status={status} />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/accessories" element={<AccessoriesApp />} />
-          <Route path="/simulations" element={<div className="p-8 text-center text-slate-400">Simulations page coming soon.</div>} />
+          <Route path="/simulations" element={<VlabApp />} />
           <Route path="/inventory" element={<div className="p-8 text-center text-slate-400">Inventory page coming soon.</div>} />
           <Route path="/analysis" element={<div className="p-8 text-center text-slate-400">Analysis page coming soon.</div>} />
           <Route path="/documentation" element={<div className="p-8 text-center text-slate-400">Documentation page coming soon.</div>} />

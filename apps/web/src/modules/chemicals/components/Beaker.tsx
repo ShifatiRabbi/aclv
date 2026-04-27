@@ -11,7 +11,7 @@ interface BeakerProps {
 }
 
 const Beaker: React.FC<BeakerProps> = ({ volume, mass, chemical, isLiquidMode, molarity }) => {
-  const currentState = isLiquidMode ? 'liquid' : chemical.naturalState;
+  const currentState = isLiquidMode ? 'liquid' : chemical.state;
   
   // Calculate heights and visuals
   const maxBeakerVolume = 600;
@@ -31,9 +31,9 @@ const Beaker: React.FC<BeakerProps> = ({ volume, mass, chemical, isLiquidMode, m
   // Saturation for liquids
   const saturationFactor = isLiquidMode ? Math.min(0.1 + (molarity / 1.5), 0.9) : 1;
 
-  // Random particles for gas/plasma
+  // Random particles for gas
   const particles = useMemo(() => {
-    return [...Array(currentState === 'gas' || currentState === 'plasma' ? 30 : 0)].map(() => ({
+    return [...Array(currentState === 'gas' ? 30 : 0)].map(() => ({
       left: Math.random() * 90 + 5,
       top: Math.random() * 90 + 5,
       size: Math.random() * 4 + 2,
@@ -143,10 +143,6 @@ const Beaker: React.FC<BeakerProps> = ({ volume, mass, chemical, isLiquidMode, m
           />
         )}
 
-        {/* PLASMA Glow */}
-        {currentState === 'plasma' && (
-           <div className="absolute inset-0 bg-blue-500/10 blur-3xl animate-pulse" />
-        )}
       </div>
 
       {/* Glass Top / Rim Detail */}

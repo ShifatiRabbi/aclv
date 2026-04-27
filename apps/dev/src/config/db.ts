@@ -6,10 +6,7 @@ dotenv.config()
 
 const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/virtual-chem-lab'
 
-mongoose.connect(mongoUri)
-  .then(() => {
-    console.log('MongoDB connected')
-  })
-  .catch(err => {
-    console.error('DB connection failed', err)
-  })
+export async function connectDb() {
+  await mongoose.connect(mongoUri)
+  console.log('MongoDB connected')
+}

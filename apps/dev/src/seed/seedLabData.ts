@@ -6,19 +6,36 @@ import mongoose from 'mongoose'
 export async function seedLabDataIfEmpty() {
   if (mongoose.connection.readyState !== 1) return
 
-  const [chemCount, expCount] = await Promise.all([
+  // Upsert-based seeding so we can safely add new seed entries over time
+  // without requiring an empty database.
+  await ChemicalModel.bulkWrite(
+    chemicalsSeed.chemicals.map((chemical) => ({
+      updateOne: {
+        filter: { id: chemical.id },
+        update: { $set: chemical },
+        upsert: true
+      }
+    })),
+    { ordered: false }
+  )
+
+  await ExperimentModel.bulkWrite(
+    reactionsSeed.experiments.map((experiment) => ({
+      updateOne: {
+        filter: { id: experiment.id },
+        update: { $set: experiment },
+        upsert: true
+      }
+    })),
+    { ordered: false }
+  )
+
+  const [chemCountAfter, expCountAfter] = await Promise.all([
     ChemicalModel.countDocuments(),
     ExperimentModel.countDocuments()
   ])
 
-  if (chemCount === 0) {
-    await ChemicalModel.insertMany(chemicalsSeed.chemicals, { ordered: false })
-    console.log(`Seeded chemicals: ${chemicalsSeed.chemicals.length}`)
-  }
-
-  if (expCount === 0) {
-    await ExperimentModel.insertMany(reactionsSeed.experiments, { ordered: false })
-    console.log(`Seeded experiments: ${reactionsSeed.experiments.length}`)
-  }
+  console.log(`Chemicals in DB: ${chemCountAfter}`)
+  console.log(`Experiments in DB: ${expCountAfter}`)
 }
 
