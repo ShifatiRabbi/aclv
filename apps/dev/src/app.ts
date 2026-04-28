@@ -3,7 +3,8 @@ import cors from 'cors'
 import { connectDb } from './config/db.ts'
 import chemicalsRouter from './routes/chemicals.ts'
 import reactionsRouter from './routes/reactions.ts'
-import { seedLabDataIfEmpty } from './seed/seedLabData.ts'
+import elementsRouter from './routes/elements.ts'
+import { seedLabDataIfEmpty, seedElementsIfEmpty } from './seed/seedLabData.ts'
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -22,11 +23,13 @@ app.get('/api/health', (_, res) => {
 
 app.use('/api/chemicals', chemicalsRouter)
 app.use('/api/reactions', reactionsRouter)
+app.use('/api/elements', elementsRouter)
 
 async function bootstrap() {
   try {
     await connectDb()
     await seedLabDataIfEmpty()
+    await seedElementsIfEmpty()
   } catch (err) {
     console.error('Startup failed', err)
   }

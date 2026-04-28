@@ -10,6 +10,7 @@ import TopNavbar from './modules/public/components/TopNavbar'
 import Footer from './modules/public/components/Footer'
 import MobileBottomNav from './modules/public/components/MobileBottomNav'
 import FAB from './modules/public/components/FAB'
+import ElementsPage from './modules/elements/pages/ElementsPage';
 
 function ShellLayout({ status }: { status: string }) {
   return (
@@ -47,6 +48,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/accessories" element={<AccessoriesApp />} />
           <Route path="/simulations" element={<VlabApp />} />
+          <Route path="/elements" element={<ElementsPage />} />
           <Route path="/inventory" element={<div className="p-8 text-center text-slate-400">Inventory page coming soon.</div>} />
           <Route path="/analysis" element={<div className="p-8 text-center text-slate-400">Analysis page coming soon.</div>} />
           <Route path="/documentation" element={<div className="p-8 text-center text-slate-400">Documentation page coming soon.</div>} />

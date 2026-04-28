@@ -1,5 +1,7 @@
 import { ChemicalModel } from '../models/Chemical.ts'
 import { ExperimentModel } from '../models/Experiment.ts'
+import { ElementModel } from '../models/Element.ts'
+import { elementsSeed } from './elements-data/seed/elements.seed.ts'
 import { chemicalsSeed, reactionsSeed } from './labData.ts'
 import mongoose from 'mongoose'
 
@@ -37,5 +39,14 @@ export async function seedLabDataIfEmpty() {
 
   console.log(`Chemicals in DB: ${chemCountAfter}`)
   console.log(`Experiments in DB: ${expCountAfter}`)
+}
+
+export async function seedElementsIfEmpty() {
+  const count = await ElementModel.countDocuments();
+
+  if (count === 0) {
+    await ElementModel.insertMany(elementsSeed);
+    console.log(`Elements seeded: ${elementsSeed.length}`);
+  }
 }
 

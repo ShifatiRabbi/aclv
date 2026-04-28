@@ -7,6 +7,7 @@ const TopNavbar: React.FC = () => {
   const navLinks = [
     { path: '/vlab', label: 'VLab' },
     { path: '/chemicals', label: 'Chemicals' },
+    { path: '/elements', label: 'Elements' },
     { path: '/accessories', label: 'Accessories' },
     { path: '/analysis', label: 'Analysis' },
     { path: '/documentation', label: 'Documentation' },
