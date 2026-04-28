@@ -1,4 +1,4 @@
-# Advanced Chemical Lab Visualization
+# Reaxorium Chemical Lab Visualization
 
 MERN monorepo project (MongoDB, Express, React, Node.js)  
 Frontend: React + Vite + Tailwind CSS + Bootstrap  
@@ -115,7 +115,7 @@ http://localhost:5173
 
 ## 📌 Overview
 
-**Virtual Chemistry Lab** is a browser-based, interactive laboratory simulation platform designed to replicate real-world chemistry experiments with high scientific accuracy. It enables users to perform titrations, qualitative ion detection, and general chemical experiments in a safe, visual, and engaging digital environment.
+**Reaxorium Chemistry Lab** is a browser-based, interactive laboratory simulation platform designed to replicate real-world chemistry experiments with high scientific accuracy. It enables users to perform titrations, qualitative ion detection, and general chemical experiments in a safe, visual, and engaging digital environment.
 
 This system is **not a simple animation tool** — it is a **rule-based scientific simulation engine** that combines:
 

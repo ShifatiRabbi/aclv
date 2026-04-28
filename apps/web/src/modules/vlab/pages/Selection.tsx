@@ -12,16 +12,21 @@ interface SelectionProps {
 
 export const Selection: React.FC<SelectionProps> = ({ onBack, onSelect }) => {
   const { setExperiment, allExperiments, setAllExperiments } = useLabStore()
+  const { selectedType } = useLabStore()
 
-  React.useEffect(() => {
-    if (allExperiments.length > 0) return
-    api
-      .get('/reactions')
-      .then((res: { data?: { experiments?: unknown[] } }) =>
-        setAllExperiments((res.data?.experiments as any[]) ?? [])
-      )
-      .catch((err: unknown) => console.error('Failed to load experiments', err))
-  }, [allExperiments.length, setAllExperiments])
+  const filteredExperiments = selectedType
+                              ? allExperiments.filter(exp => exp.type === selectedType)
+                              : allExperiments
+
+  // React.useEffect(() => {
+  //   if (allExperiments.length > 0) return
+  //   api
+  //     .get('/reactions')
+  //     .then((res: { data?: { experiments?: unknown[] } }) =>
+  //       setAllExperiments((res.data?.experiments as any[]) ?? [])
+  //     )
+  //     .catch((err: unknown) => console.error('Failed to load experiments', err))
+  // }, [allExperiments.length, setAllExperiments])
 
   const handleSelect = (exp: Experiment) => {
     setExperiment(exp)
@@ -49,7 +54,7 @@ export const Selection: React.FC<SelectionProps> = ({ onBack, onSelect }) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {allExperiments.map((exp, i) => (
+          {filteredExperiments.map((exp, i) => (
             <motion.div
               key={exp.id}
               initial={{ opacity: 0, scale: 0.95 }}

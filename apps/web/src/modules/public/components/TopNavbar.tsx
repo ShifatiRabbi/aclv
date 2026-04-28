@@ -17,7 +17,7 @@ const TopNavbar: React.FC = () => {
       <Link to="/" className="flex items-center gap-2">
         <span className="material-symbols-outlined text-primary-container text-2xl orange-glow">science</span>
         <span className="text-xl md:text-2xl font-bold tracking-tighter text-primary-container orange-glow" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-          NEUROCHEM_LAB
+          Reaxorium
         </span>
       </Link>
       

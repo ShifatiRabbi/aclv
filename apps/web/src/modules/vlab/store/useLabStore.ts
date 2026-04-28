@@ -24,6 +24,9 @@ interface LabStore extends LabState {
 
   allExperiments: Experiment[]
   setAllExperiments: (experiments: Experiment[]) => void
+
+  selectedType: string | null
+  setSelectedType: (type: string | null) => void
 }
 
 const initialState: LabState = {
@@ -49,6 +52,9 @@ export const useLabStore = create<LabStore>((set) => ({
   ...initialState,
   allChemicals: [],
   allExperiments: [],
+
+  selectedType: null,
+  setSelectedType: (type) => set({ selectedType: type }),
 
   setAllChemicals: (chemicals) => set({ allChemicals: chemicals }),
   setAllExperiments: (experiments) => set({ allExperiments: experiments }),

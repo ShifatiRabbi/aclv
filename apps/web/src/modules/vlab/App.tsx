@@ -14,14 +14,19 @@ type Page = 'home' | 'selection' | 'lab'
 
 export default function VirtualLabApp() {
   const [page, setPage] = React.useState<Page>('home')
-  const { currentExperiment, resetLab, showResult, setAllChemicals } = useLabStore()
+  const { currentExperiment, resetLab, showResult, setAllChemicals, setAllExperiments } = useLabStore()
 
-  React.useEffect(() => {
-    api
-      .get('/chemicals')
-      .then((res: { data?: { chemicals?: unknown[] } }) => setAllChemicals((res.data?.chemicals as any[]) ?? []))
-      .catch((err: unknown) => console.error('Chemical fetch error', err))
-  }, [setAllChemicals])
+ React.useEffect(() => {
+  api
+    .get('/chemicals')
+    .then((res) => setAllChemicals(res.data?.chemicals ?? []))
+    .catch((err) => console.error('Chemical fetch error', err))
+  
+  api
+    .get('/reactions')
+    .then((res) => setAllExperiments(res.data?.experiments ?? []))
+    .catch((err) => console.error('Experiment fetch error', err))
+}, [])
 
   const handleReset = () => resetLab()
 
@@ -31,7 +36,7 @@ export default function VirtualLabApp() {
   }
 
   return (
-    <div className="h-screen w-screen bg-[#0A0A0C] text-[#E0E0E0] font-sans flex flex-col overflow-hidden select-none">
+    <div className="h-screen w-screen bg-[#0A0A0C] text-[#E0E0E0] font-sans flex flex-col select-none">
       <AnimatePresence mode="wait">
         {page === 'home' && (
           <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex-1">
@@ -57,12 +62,12 @@ export default function VirtualLabApp() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="flex-1 flex flex-col overflow-hidden"
+            className="flex-1 flex flex-col min-h-0"
           >
             <LabHeader />
-            <main className="flex-1 flex overflow-hidden relative">
+            <main className="flex-1 flex min-h-0 relative">
               <ChemicalLibrary />
-              <div className="flex-1 flex flex-col relative overflow-hidden">
+              <div className="flex-1 flex flex-col relative">
                 <LearningPanel />
                 <LabArea />
               </div>
