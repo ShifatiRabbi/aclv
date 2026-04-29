@@ -24,9 +24,9 @@ export class ElementsService {
     return ElementModel.findOne({ atomic_number: atomicNumber });
   }
 
-  // async getReactionsByElement(atomicNumber: number): Promise<Reaction[]> {
-  //   return this.reactions.filter(r => r.relatedElements.includes(atomicNumber));
-  // }
+  async getElementFullDataByElement(atomicNumber: number): Promise<Reaction[]> {
+    return this.reactions.filter(r => r.relatedElements.includes(atomicNumber));
+  }
 }
 
 export const elementsService = ElementsService.getInstance();

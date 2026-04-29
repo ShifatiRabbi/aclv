@@ -19,7 +19,7 @@ export async function fetchElementById(id: number): Promise<Element> {
 }
 
 export async function fetchElementReactions(id: number): Promise<Reaction[]> {
-  const response = await api.get(`/elements/${id}/reactions`);
-  if (!response) throw new Error('Failed to fetch element reactions');
+  const response = await api.get(`/elements/${id}/fulldata`);
+  if (!response) throw new Error('Failed to fetch element complete data');
   return response.data;
 }

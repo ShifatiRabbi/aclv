@@ -27,16 +27,16 @@ export class ElementsController {
     }
   }
 
-  async getElementReactions(req: Request, res: Response) {
+  async getElementFullData(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id as string);
       if (isNaN(id)) {
         return res.status(400).json({ error: 'Invalid atomic number' });
       }
-      // const reactions = await elementsService.getReactionsByElement(id);
-      // res.json(reactions);
+      const reactions = await elementsService.getElementFullDataByElement(id);
+      res.json(reactions);
     } catch (error) {
-      res.status(500).json({ error: 'Failed to fetch reactions' });
+      res.status(500).json({ error: 'Failed to fetch element complete data' });
     }
   }
 }
