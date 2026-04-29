@@ -2,7 +2,6 @@ import React from 'react'
 import { motion } from 'motion/react'
 import { ArrowLeft, Beaker, Pipette, ChevronRight } from 'lucide-react'
 import { useLabStore } from '../store/useLabStore'
-import { api } from '../../../shared/utils/api'
 import type { Experiment } from '../types'
 
 interface SelectionProps {
@@ -11,7 +10,7 @@ interface SelectionProps {
 }
 
 export const Selection: React.FC<SelectionProps> = ({ onBack, onSelect }) => {
-  const { setExperiment, allExperiments, setAllExperiments } = useLabStore()
+  const { setExperiment, allExperiments } = useLabStore()
   const { selectedType } = useLabStore()
 
   const filteredExperiments = selectedType

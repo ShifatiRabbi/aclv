@@ -1,7 +1,3 @@
-import axios from 'axios'
-const backendUrl = 'http://localhost:5000';
+import { http } from '../api/http'
 
-export const api = axios.create({
-  baseURL: `${backendUrl}/api`,
-  withCredentials: true
-})
+export const api = http
