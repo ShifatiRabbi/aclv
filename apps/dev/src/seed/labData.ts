@@ -585,7 +585,7 @@ export const chemicalsSeed = {
       name: 'Chlorine',
       formula: 'Cl₂',
       state: 'gas',
-      color: '#facc15',
+      color: '#c8d94a',
       molecularWeight: 70.90,
       density: 0.0032,
       solubility: 0.7,
@@ -613,7 +613,7 @@ export const chemicalsSeed = {
       name: 'Bromine',
       formula: 'Br₂',
       state: 'liquid',
-      color: '#991b1b',
+      color: '#8b3a00',
       molecularWeight: 159.81,
       density: 3.10,
       solubility: 3.5,
@@ -1073,7 +1073,7 @@ export const chemicalsSeed = {
       name: 'Nickel(II) Sulfate',
       formula: 'NiSO₄',
       state: 'solid',
-      color: '#10b981',
+      color: '#5ba89a',
       molecularWeight: 154.75,
       density: 3.68,
       solubility: 38,
@@ -1102,7 +1102,7 @@ export const chemicalsSeed = {
       name: 'Ferrous Sulfate',
       formula: 'FeSO₄',
       state: 'solid',
-      color: '#4ade80',
+      color: '#a8d5b5',
       molecularWeight: 151.91,
       density: 2.84,
       solubility: 26,
@@ -1116,7 +1116,7 @@ export const chemicalsSeed = {
       name: 'Iron(II) Sulfate Solution',
       formula: 'FeSO₄(aq)',
       state: 'liquid',
-      color: 'rgba(74, 222, 128, 0.35)',
+      color: 'rgba(140, 195, 160, 0.35)',
       molarity: 0.1,
       molecularWeight: 151.91,
       density: 1.01,
@@ -1789,7 +1789,7 @@ export const chemicalsSeed = {
       name: 'Nitrogen Dioxide',
       formula: 'NO₂',
       state: 'gas',
-      color: '#e07b00',
+      color: '#b84a00',
       molecularWeight: 46.01,
       density: 0.0019,
       solubility: 0.3,
@@ -2724,7 +2724,242 @@ export const chemicalsSeed = {
       allowsLiquidView: true,
       description:
         'A clear, colorless aqueous solution with a faint vinegar-like odour. Weakly basic (pH ~9). Used with acetic acid to prepare acetate buffer solutions. Demonstrates conjugate base behaviour in buffer chemistry.'
-    }
+    },
+    {
+      id: 'kscn_aq',
+      name: 'Potassium Thiocyanate Solution',
+      formula: 'KSCN(aq)',
+      state: 'liquid',
+      color: 'rgba(255, 255, 255, 0.05)',
+      molarity: 0.1,
+      molecularWeight: 97.18,
+      density: 1.004,
+      solubility: 100,
+      cost: 18,
+      hazards: ['irritant', 'toxic if ingested'],
+      allowsLiquidView: true,
+      description:
+        'A clear, colorless aqueous solution. Produces an immediate and dramatic blood-red color with Fe³⁺ ions — one of the most sensitive colorimetric tests in qualitative analysis. Used as the confirmatory test for iron(III).'
+    },
+    {
+      id: 'kscn_solid',
+      name: 'Potassium Thiocyanate',
+      formula: 'KSCN',
+      state: 'solid',
+      color: '#f8f8f4',
+      molecularWeight: 97.18,
+      density: 1.89,
+      solubility: 177,
+      cost: 20,
+      hazards: ['irritant', 'toxic if ingested'],
+      allowsLiquidView: true,
+      description:
+        'A white hygroscopic crystalline solid. Highly soluble in water. Forms blood-red complex with Fe³⁺. Used in gravimetric analysis and photography.'
+    },
+    {
+      id: 'na2so3_solid',
+      name: 'Sodium Sulfite',
+      formula: 'Na₂SO₃',
+      state: 'solid',
+      color: '#f4f4f0',
+      molecularWeight: 126.04,
+      density: 2.63,
+      solubility: 23,
+      cost: 10,
+      hazards: ['irritant'],
+      allowsLiquidView: true,
+      description:
+        'A white crystalline powder. A mild reducing and bleaching agent. Reacts with acids to generate SO₂ gas. Used as a food preservative (E221) and in photography as a fixer component.'
+    },
+    {
+      id: 'copper_sulfate_5h2o',
+      name: 'Copper Sulfate Pentahydrate',
+      formula: 'CuSO₄·5H₂O',
+      state: 'solid',
+      color: '#2563eb',
+      molecularWeight: 249.68,
+      density: 2.28,
+      solubility: 32,
+      cost: 22,
+      hazards: ['irritant', 'toxic to aquatic life'],
+      allowsLiquidView: true,
+      description:
+        'The familiar vivid royal-blue hydrated form of copper sulfate (bluestone/blue vitriol). The pentahydrate form, MW 249.68 g/mol, is what is typically found in labs. Turns white anhydrous CuSO₄ on strong heating.'
+    },
+    {
+      id: 'iron2_sulfate_7h2o',
+      name: 'Iron(II) Sulfate Heptahydrate',
+      formula: 'FeSO₄·7H₂O',
+      state: 'solid',
+      color: '#7fc4a0',
+      molecularWeight: 278.01,
+      density: 1.895,
+      solubility: 26,
+      cost: 10,
+      hazards: ['irritant'],
+      allowsLiquidView: true,
+      description:
+        'The common green heptahydrate form of iron(II) sulfate (copperas/green vitriol). MW 278.01 g/mol. Pale blue-green crystals. Oxidises slowly in air to yellow-brown Fe³⁺. Used as an iron supplement and reducing agent.'
+    },
+    {
+      id: 'kcl_aq',
+      name: 'Potassium Chloride Solution',
+      formula: 'KCl(aq)',
+      state: 'liquid',
+      color: 'rgba(255, 255, 255, 0.05)',
+      molarity: 0.1,
+      molecularWeight: 74.55,
+      density: 1.005,
+      solubility: 100,
+      cost: 5,
+      hazards: [],
+      allowsLiquidView: true,
+      description:
+        'A clear, colorless aqueous solution. Physiologically important electrolyte. Produces a lilac/violet flame in a flame test (K⁺). Used in electrochemistry, medicine (IV fluids), and as a salt substitute.'
+    },
+    {
+      id: 'kcl_solid',
+      name: 'Potassium Chloride',
+      formula: 'KCl',
+      state: 'solid',
+      color: '#f8f8f8',
+      molecularWeight: 74.55,
+      density: 1.984,
+      solubility: 34,
+      cost: 5,
+      hazards: [],
+      allowsLiquidView: true,
+      description:
+        'A white crystalline solid. Highly soluble in water. Produces a characteristic lilac flame (K⁺). Used in fertilizers, medicine (electrolyte replenishment), and as a salt substitute for low-sodium diets.'
+    },
+    {
+      id: 'nahso4_aq',
+      name: 'Sodium Bisulfate Solution',
+      formula: 'NaHSO₄(aq)',
+      state: 'liquid',
+      color: 'rgba(255, 255, 255, 0.07)',
+      molarity: 0.5,
+      molecularWeight: 120.06,
+      density: 1.02,
+      solubility: 100,
+      cost: 8,
+      hazards: ['corrosive', 'irritant'],
+      allowsLiquidView: true,
+      description:
+        'A clear, colorless acidic solution. Sodium hydrogen sulfate — a solid acid in aqueous solution. Used to acidify solutions in qualitative analysis where sulfate interference must be avoided. pH ~1 at this concentration.'
+    },
+    {
+      id: 'nh4oh_aq',
+      name: 'Ammonium Hydroxide Solution',
+      formula: 'NH₄OH(aq)',
+      state: 'liquid',
+      color: 'rgba(220, 252, 231, 0.25)',
+      molarity: 2.0,
+      molecularWeight: 35.05,
+      density: 0.91,
+      solubility: 100,
+      cost: 8,
+      hazards: ['corrosive', 'toxic', 'pungent odor'],
+      allowsLiquidView: true,
+      description:
+        'Concentrated ammonia solution (~28–30% NH₃ by weight). A pungent, colorless liquid. A common lab base used in qualitative analysis to precipitate and complex metal ions. Same as "concentrated Ammonia Solution" but at higher molarity.'
+    },
+    {
+      id: 'k2so4_aq',
+      name: 'Potassium Sulfate Solution',
+      formula: 'K₂SO₄(aq)',
+      state: 'liquid',
+      color: 'rgba(255, 255, 255, 0.05)',
+      molarity: 0.1,
+      molecularWeight: 174.26,
+      density: 1.01,
+      solubility: 100,
+      cost: 12,
+      hazards: [],
+      allowsLiquidView: true,
+      description:
+        'A clear, colorless aqueous solution. Produces a white BaSO₄ precipitate with BaCl₂ and a lilac/violet K⁺ flame. Used in the sulfate detection test and as an electrolyte in conductivity experiments.'
+    },
+    {
+      id: 'mgcl2_aq',
+      name: 'Magnesium Chloride Solution',
+      formula: 'MgCl₂(aq)',
+      state: 'liquid',
+      color: 'rgba(255, 255, 255, 0.05)',
+      molarity: 0.1,
+      molecularWeight: 95.21,
+      density: 1.007,
+      solubility: 100,
+      cost: 8,
+      hazards: [],
+      allowsLiquidView: true,
+      description:
+        'A clear, colorless aqueous solution. Divalent electrolyte. Forms a white Mg(OH)₂ precipitate with NaOH (unlike Zn²⁺ it does NOT dissolve in excess NaOH). Used in coagulation chemistry and as a Mg²⁺ source.'
+    },
+    {
+      id: 'mnso4_aq',
+      name: 'Manganese(II) Sulfate Solution',
+      formula: 'MnSO₄(aq)',
+      state: 'liquid',
+      color: 'rgba(251, 207, 232, 0.30)',
+      molarity: 0.1,
+      molecularWeight: 151.00,
+      density: 1.01,
+      solubility: 100,
+      cost: 22,
+      hazards: ['irritant'],
+      allowsLiquidView: true,
+      description:
+        'A very pale pink aqueous solution. Forms a pale pink/flesh-colored Mn(OH)₂ precipitate with NaOH, which slowly oxidises in air to dark brown MnO₂. Used in Winkler method for dissolved oxygen determination.'
+    },
+    {
+      id: 'al2so4_aq',
+      name: 'Aluminum Sulfate Solution',
+      formula: 'Al₂(SO₄)₃(aq)',
+      state: 'liquid',
+      color: 'rgba(255, 255, 255, 0.06)',
+      molarity: 0.1,
+      molecularWeight: 342.15,
+      density: 1.01,
+      solubility: 100,
+      cost: 10,
+      hazards: ['irritant'],
+      allowsLiquidView: true,
+      description:
+        'A clear, colorless, slightly acidic aqueous solution. Forms a white gelatinous Al(OH)₃ precipitate with NaOH that dissolves in excess alkali (amphoteric). Used in water treatment as a flocculant and in papermaking.'
+    },
+    {
+      id: 'h2c2o4_aq',
+      name: 'Oxalic Acid Solution',
+      formula: 'H₂C₂O₄(aq)',
+      state: 'liquid',
+      color: 'rgba(255, 255, 255, 0.06)',
+      molarity: 0.1,
+      molecularWeight: 90.03,
+      density: 1.004,
+      solubility: 100,
+      cost: 12,
+      hazards: ['toxic', 'irritant'],
+      allowsLiquidView: true,
+      description:
+        'A clear, colorless aqueous solution. A diprotic weak acid. Used as a primary standard in permanganate titrations (KMnO₄ vs oxalic acid at 60°C). Forms insoluble CaC₂O₄ with Ca²⁺ — used to detect calcium ions.'
+    },
+    {
+      id: 'na2co3_aq',
+      name: 'Sodium Carbonate Solution',
+      formula: 'Na₂CO₃(aq)',
+      state: 'liquid',
+      color: 'rgba(255, 255, 255, 0.06)',
+      molarity: 0.1,
+      molecularWeight: 105.99,
+      density: 1.01,
+      solubility: 100,
+      cost: 8,
+      hazards: ['irritant'],
+      allowsLiquidView: true,
+      description:
+        'A clear, colorless alkaline solution. Moderately basic (pH ~11). Reacts with acids to produce CO₂. Precipitates metal carbonates from metal salt solutions. Used in buffer preparation and as a mild alkali source.'
+    },
   ]
 } as const
 
@@ -4840,7 +5075,676 @@ export const reactionsSeed = {
           'Principle of copper electrorefining.'
         ]
       }
-    }
+    },
+    // ─── TITRATIONS ────────────────────────────────────────────────
+    {
+      id: 'oxalate_permanganate_titration',
+      name: 'Permanganate Titration: KMnO₄ vs Oxalic Acid',
+      type: 'titration',
+      theory:
+        'Oxalic acid (H₂C₂O₄) reduces KMnO₄ in acidic solution. The reaction requires heating to ~60°C to proceed at a reasonable rate. Initially slow (autocatalytic — Mn²⁺ produced catalyses the reaction).',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'fill_burette',
+          action: 'pour',
+          target: 'burette',
+          chemical: 'Potassium Permanganate Solution',
+          volume: 50,
+          hint: 'Fill the burette with standardised 0.02M Potassium Permanganate Solution.'
+        },
+        {
+          id: 'add_oxalate',
+          action: 'pipette',
+          target: 'flask',
+          chemical: 'Oxalic Acid Solution',
+          volume: 25,
+          hint: 'Pipette 25.00 mL of 0.1M Oxalic Acid Solution into the conical flask.'
+        },
+        {
+          id: 'acidify',
+          action: 'pour',
+          target: 'flask',
+          chemical: 'Dilute Sulfuric Acid',
+          volume: 10,
+          hint: 'Add 10 mL of Dilute Sulfuric Acid. Acidic conditions are essential.'
+        },
+        {
+          id: 'heat',
+          action: 'heat',
+          target: 'flask',
+          duration: 60,
+          hint: 'Heat to 60–70°C. Do NOT boil — oxalic acid decomposes above 90°C.'
+        },
+        {
+          id: 'titrate',
+          action: 'burette',
+          chemical: 'Potassium Permanganate Solution',
+          until: 'color_change',
+          hint: 'Add KMnO₄. First drops decolorize slowly (induction period). As Mn²⁺ builds up (autocatalysis), each drop decolorizes faster. Endpoint: first faint permanent pink.'
+        }
+      ],
+      result: {
+        color: 'rgba(255, 150, 200, 0.3)',
+        equation: '2MnO₄⁻ + 5H₂C₂O₄ + 6H⁺ → 2Mn²⁺ + 10CO₂ + 8H₂O',
+        observations: [
+          'First few drops of KMnO₄ decolorize very slowly — induction period (no Mn²⁺ catalyst yet).',
+          'As Mn²⁺ accumulates, decolorization becomes progressively faster (autocatalysis).',
+          'Endpoint: first faint permanent pink that persists 30 s. Temperature must be maintained at 60°C.'
+        ],
+        formula: 'n(KMnO₄) × 5/2 = n(H₂C₂O₄)'
+      }
+    },
+    {
+      id: 'back_titration_caco3',
+      name: 'Back Titration: CaCO₃ Purity',
+      type: 'titration',
+      theory:
+        'An excess of HCl is added to dissolve the CaCO₃ sample. The unreacted HCl is then back-titrated with NaOH. The difference gives the amount of HCl consumed by the carbonate.',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'weigh_sample',
+          action: 'weigh',
+          chemical: 'Calcium Carbonate',
+          hint: 'Accurately weigh ~0.25 g of the CaCO₃ sample (or limestone) into a conical flask.'
+        },
+        {
+          id: 'add_excess_hcl',
+          action: 'pipette',
+          target: 'flask',
+          chemical: 'Hydrochloric Acid Solution',
+          volume: 50,
+          hint: 'Add excess 0.1M Hydrochloric Acid Solution (50 mL). The CaCO₃ dissolves with CO₂ effervescence.'
+        },
+        {
+          id: 'boil_off_co2',
+          action: 'heat',
+          target: 'flask',
+          duration: 120,
+          hint: 'Gently heat to expel all dissolved CO₂ (prevents interference in the back-titration). Cool to room temperature.'
+        },
+        {
+          id: 'add_indicator',
+          action: 'drop',
+          chemical: 'Phenolphthalein',
+          hint: 'Add 2–3 drops of Phenolphthalein indicator.'
+        },
+        {
+          id: 'back_titrate',
+          action: 'burette',
+          chemical: 'Sodium Hydroxide Solution',
+          until: 'color_change',
+          hint: 'Back-titrate the excess HCl with 0.1M Sodium Hydroxide Solution. Endpoint: first persistent pale pink. Record V(NaOH).'
+        }
+      ],
+      result: {
+        color: 'rgba(255, 105, 180, 0.35)',
+        equation: 'CaCO₃ + 2HCl → CaCl₂ + H₂O + CO₂\nExcess HCl + NaOH → NaCl + H₂O',
+        observations: [
+          'Vigorous CO₂ effervescence when HCl is added to CaCO₃.',
+          'Solution clears completely after heating (CO₂ expelled).',
+          'Back-titration endpoint: pale pink (phenolphthalein).',
+          'Purity % = [n(HCl)initial - n(NaOH)] × MW(CaCO₃)/2 × mass_sample × 100'
+        ],
+        formula: 'n(CaCO₃) = [c(HCl)×V(HCl) - c(NaOH)×V(NaOH)] / 2'
+      }
+    },
+  
+    // ─── ION DETECTION ─────────────────────────────────────────────
+    {
+      id: 'ammonium_ion_detection',
+      name: 'Ammonium Ion Detection (NaOH Test)',
+      type: 'ion_detection',
+      theory:
+        'Ammonium salts react with warm NaOH to liberate ammonia gas, detected by its smell, alkaline effect on litmus, and white smoke with HCl.',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'add_sample',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Ammonium Chloride Solution',
+          volume: 5,
+          hint: 'Add 5 mL of Ammonium Chloride Solution (or any ammonium salt solution) to the test tube.'
+        },
+        {
+          id: 'add_naoh',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Sodium Hydroxide Solution',
+          volume: 5,
+          hint: 'Add Sodium Hydroxide Solution and mix.'
+        },
+        {
+          id: 'warm',
+          action: 'heat',
+          target: 'tube',
+          duration: 60,
+          hint: 'Warm the tube gently. A pungent smell is detected.'
+        },
+        {
+          id: 'test_litmus',
+          action: 'damp_litmus',
+          hint: 'Hold damp red litmus paper at the mouth of the tube — it turns blue, confirming NH₃ gas.'
+        },
+        {
+          id: 'test_hcl',
+          action: 'hcl_fumes',
+          hint: 'Hold a glass rod dipped in Hydrochloric Acid near the mouth — dense white NH₄Cl smoke confirms ammonium ion.'
+        }
+      ],
+      result: {
+        color: 'rgba(220, 252, 231, 0.4)',
+        equation: 'NH₄⁺ + OH⁻ →(heat) NH₃↑ + H₂O\nNH₃ + HCl → NH₄Cl (white smoke)',
+        observations: [
+          'Pungent ammonia smell on warming.',
+          'Damp red litmus turns blue (alkaline gas).',
+          'White smoke with HCl fumes confirms NH₄⁺.'
+        ]
+      }
+    },
+    {
+      id: 'nitrate_ring_test',
+      name: 'Nitrate Ion Detection (Brown Ring Test)',
+      type: 'ion_detection',
+      theory:
+        'In the brown ring test, iron(II) sulfate reduces nitrate to NO in acidic solution. The NO combines with excess FeSO₄ to form a brown [Fe(NO)]²⁺ complex at the interface of the two liquid layers.',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'add_sample',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Potassium Nitrate',
+          volume: 5,
+          hint: 'Dissolve a small amount of Potassium Nitrate in 5 mL water in the test tube (or add 5 mL of the nitrate solution).'
+        },
+        {
+          id: 'add_feso4',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Iron(II) Sulfate Solution',
+          volume: 5,
+          hint: 'Add 5 mL of freshly prepared Iron(II) Sulfate Solution to the test tube. Mix well.'
+        },
+        {
+          id: 'add_conc_h2so4',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Sulfuric Acid',
+          volume: 2,
+          hint: 'Carefully pour 2 mL of concentrated Sulfuric Acid down the inside of the inclined tube so it sinks below the aqueous layer. Do NOT mix — two layers must form.'
+        },
+        {
+          id: 'observe_ring',
+          action: 'observe',
+          hint: 'Observe the interface between the two layers. A dark brown ring forms at the boundary — confirming nitrate ions.'
+        }
+      ],
+      result: {
+        color: 'rgba(101, 50, 0, 0.7)',
+        equation: 'NO₃⁻ + 3Fe²⁺ + 4H⁺ → NO + 3Fe³⁺ + 2H₂O\n[Fe(H₂O)₅(NO)]²⁺ = brown ring complex',
+        observations: [
+          'A dark brown ring forms at the interface of the aqueous and acid layers.',
+          'The ring is the pentaaquanitrosyliron(II) complex [Fe(H₂O)₅NO]²⁺.',
+          'MUST use conc. H₂SO₄ as the acid — HNO₃ and HCl are not suitable.'
+        ]
+      }
+    },
+    {
+      id: 'calcium_ion_detection',
+      name: 'Calcium Ion Detection (Flame + Oxalate)',
+      type: 'ion_detection',
+      theory:
+        'Ca²⁺ can be confirmed by (a) brick-red/orange-red flame test and (b) formation of white insoluble calcium oxalate precipitate with ammonium oxalate.',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'flame_test',
+          action: 'flame_test',
+          chemical: 'Calcium Chloride',
+          hint: 'Perform a flame test with Calcium Chloride — a brick-red/orange-red flame confirms Ca²⁺.'
+        },
+        {
+          id: 'add_ca_solution',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Calcium Chloride Solution',
+          volume: 5,
+          hint: 'Add 5 mL of Calcium Chloride Solution to a test tube.'
+        },
+        {
+          id: 'add_oxalate',
+          action: 'drop',
+          chemical: 'Oxalic Acid Solution',
+          hint: 'Add Oxalic Acid Solution (or ammonium oxalate solution) dropwise. A white CaC₂O₄ precipitate forms.'
+        },
+        {
+          id: 'test_solubility',
+          action: 'drop',
+          chemical: 'Hydrochloric Acid Solution',
+          hint: 'Add Hydrochloric Acid Solution — the precipitate dissolves, distinguishing CaC₂O₄ from BaSO₄ (which is acid-stable).'
+        }
+      ],
+      result: {
+        color: 'rgba(255, 255, 255, 0.85)',
+        precipitate: true,
+        equation: 'Ca²⁺ + C₂O₄²⁻ → CaC₂O₄↓ (white, soluble in dilute HCl)\nFlame test: Ca²⁺ → brick-red (622 nm)',
+        observations: [
+          'Brick-red/orange-red flame confirms Ca²⁺.',
+          'White precipitate with oxalate confirms Ca²⁺.',
+          'Precipitate dissolves in dilute HCl — distinguishes from sulfate precipitates.'
+        ]
+      }
+    },
+    {
+      id: 'magnesium_ion_detection',
+      name: 'Magnesium Ion Detection (NaOH Precipitate)',
+      type: 'ion_detection',
+      theory:
+        'Mg²⁺ forms a white gelatinous Mg(OH)₂ precipitate with NaOH. Unlike Zn(OH)₂ and Al(OH)₃, Mg(OH)₂ does NOT dissolve in excess NaOH — this is a key distinguishing test.',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'add_mgcl2',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Magnesium Chloride Solution',
+          volume: 5,
+          hint: 'Add 5 mL of Magnesium Chloride Solution (or MgSO₄ solution) to the test tube.'
+        },
+        {
+          id: 'add_naoh_drop',
+          action: 'drop',
+          chemical: 'Sodium Hydroxide Solution',
+          hint: 'Add Sodium Hydroxide Solution dropwise. A white gelatinous Mg(OH)₂ precipitate forms.'
+        },
+        {
+          id: 'add_naoh_excess',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Sodium Hydroxide Solution',
+          volume: 10,
+          hint: 'Add excess NaOH. The precipitate does NOT dissolve (unlike Zn(OH)₂ or Al(OH)₃ which dissolve in excess NaOH).'
+        }
+      ],
+      result: {
+        color: 'rgba(255, 255, 255, 0.85)',
+        precipitate: true,
+        equation: 'Mg²⁺ + 2OH⁻ → Mg(OH)₂↓ (white, gelatinous)\nDoes NOT dissolve in excess NaOH',
+        observations: [
+          'White gelatinous precipitate forms with NaOH.',
+          'Insoluble in excess NaOH — non-amphoteric (distinguishes Mg²⁺ from Zn²⁺ and Al³⁺).',
+          'Mg²⁺ does not give a notable flame colour (colourless).'
+        ]
+      }
+    },
+  
+    // ─── PRECIPITATION ──────────────────────────────────────────────
+    {
+      id: 'aluminum_hydroxide_amphoteric',
+      name: 'Al(OH)₃: Amphoteric Behaviour',
+      type: 'precipitation',
+      theory:
+        'Al(OH)₃ is amphoteric — it dissolves in both acid (forming Al³⁺) and excess alkali (forming aluminate [Al(OH)₄]⁻). This distinguishes Al³⁺ from Mg²⁺ (which gives insoluble Mg(OH)₂ in excess NaOH).',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'add_alum',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Aluminum Sulfate Solution',
+          volume: 10,
+          hint: 'Add 10 mL of Aluminum Sulfate Solution to the test tube.'
+        },
+        {
+          id: 'add_naoh_few',
+          action: 'drop',
+          chemical: 'Sodium Hydroxide Solution',
+          hint: 'Add NaOH dropwise. A white gelatinous Al(OH)₃ precipitate forms — appears like jelly.'
+        },
+        {
+          id: 'add_naoh_excess',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Sodium Hydroxide Solution',
+          volume: 15,
+          hint: 'Add excess NaOH. The precipitate completely dissolves to give a clear aluminate [Al(OH)₄]⁻ solution.'
+        },
+        {
+          id: 'add_acid',
+          action: 'drop',
+          chemical: 'Hydrochloric Acid Solution',
+          hint: 'Add HCl dropwise. Precipitate reforms (Al(OH)₃), then dissolves again in excess acid (Al³⁺). Confirms amphoteric character.'
+        }
+      ],
+      result: {
+        color: 'rgba(255, 255, 255, 0.08)',
+        equation: 'Al³⁺ + 3OH⁻ → Al(OH)₃↓ (white gelatinous)\nAl(OH)₃ + OH⁻ → [Al(OH)₄]⁻ (tetrahydroxoaluminate, clear)\nAl(OH)₃ + 3H⁺ → Al³⁺ + 3H₂O',
+        observations: [
+          'White gelatinous Al(OH)₃ — dissolves in both excess NaOH and excess HCl.',
+          'Excess NaOH: precipitate clears completely (aluminate ion forms).',
+          'Key distinguishing test: Mg(OH)₂ does NOT dissolve in excess NaOH.'
+        ]
+      }
+    },
+    {
+      id: 'manganese_hydroxide_oxidation',
+      name: 'Mn(OH)₂ Precipitation and Air Oxidation',
+      type: 'precipitation',
+      theory:
+        'Mn²⁺ forms a pale pink/flesh-colored Mn(OH)₂ precipitate with NaOH. This rapidly oxidises in air through a brown intermediate to dark brown MnO₂. Used in the Winkler dissolved oxygen method.',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'add_mnso4',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Manganese(II) Sulfate Solution',
+          volume: 5,
+          hint: 'Add 5 mL of very pale pink Manganese(II) Sulfate Solution.'
+        },
+        {
+          id: 'add_naoh',
+          action: 'drop',
+          chemical: 'Sodium Hydroxide Solution',
+          hint: 'Add Sodium Hydroxide Solution. A pale pink/flesh-coloured Mn(OH)₂ precipitate forms.'
+        },
+        {
+          id: 'expose_air',
+          action: 'observe',
+          hint: 'Leave the tube open and shake. The pale pink precipitate turns brown then dark brown/black as Mn(OH)₂ oxidises to MnO(OH) and MnO₂ in air.'
+        }
+      ],
+      result: {
+        color: 'rgba(50, 30, 10, 0.65)',
+        precipitate: true,
+        equation: 'Mn²⁺ + 2OH⁻ → Mn(OH)₂↓ (pale pink)\n2Mn(OH)₂ + O₂ → 2MnO(OH)↓ + H₂O (brown)\n4MnO(OH) + O₂ → 4MnO₂↓ (dark brown/black)',
+        observations: [
+          'Pale pink/flesh-coloured Mn(OH)₂ precipitate initially.',
+          'Rapidly turns brown then dark brown/black on exposure to air.',
+          'The rate of colour change indicates dissolved oxygen — basis of Winkler O₂ method.'
+        ]
+      }
+    },
+    {
+      id: 'nickel_ammonia_complex',
+      name: 'Ni²⁺ + Ammonia: Blue Complex',
+      type: 'complex_formation',
+      theory:
+        'Nickel(II) ions form a blue hexaamminenickel(II) complex with excess ammonia, distinct from the paler green aquo complex. The colour change is less dramatic than the copper ammonia complex.',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'add_niso4',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Nickel(II) Sulfate Solution',
+          volume: 5,
+          hint: 'Add 5 mL of emerald-green Nickel(II) Sulfate Solution.'
+        },
+        {
+          id: 'add_ammonia_drop',
+          action: 'drop',
+          chemical: 'Ammonia Solution',
+          hint: 'Add Ammonia Solution dropwise. A pale green Ni(OH)₂ precipitate forms initially.'
+        },
+        {
+          id: 'add_ammonia_excess',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Ammonia Solution',
+          volume: 10,
+          hint: 'Add excess Ammonia Solution. The precipitate dissolves to give a blue [Ni(NH₃)₆]²⁺ solution — noticeably different from the green aquo complex.'
+        }
+      ],
+      result: {
+        color: 'rgba(30, 100, 200, 0.55)',
+        equation: 'Ni²⁺ + 2NH₃ + 2H₂O → Ni(OH)₂↓ + 2NH₄⁺\nNi(OH)₂ + 6NH₃ → [Ni(NH₃)₆]²⁺ + 2OH⁻ (blue/blue-violet)',
+        observations: [
+          'Green NiSO₄ → pale green Ni(OH)₂ precipitate with dilute NH₃.',
+          'Excess NH₃ dissolves precipitate → blue [Ni(NH₃)₆]²⁺ solution.',
+          'Less dramatic than the Cu²⁺/NH₃ reaction but clearly distinguishable colour change.'
+        ]
+      }
+    },
+  
+    // ─── REDOX ──────────────────────────────────────────────────────
+    {
+      id: 'magnesium_burning',
+      name: 'Magnesium Combustion in Air',
+      type: 'redox',
+      theory:
+        'Magnesium burns with an intense white flame in air, producing white MgO and a small amount of Mg₃N₂. The reaction is highly exothermic. The bright UV emission makes direct viewing dangerous.',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'prepare_mg',
+          action: 'add_solid',
+          target: 'crucible',
+          chemical: 'Magnesium',
+          mass: 0.5,
+          hint: 'Hold a short piece of Magnesium ribbon with tongs. Do not look directly at the flame.'
+        },
+        {
+          id: 'ignite',
+          action: 'ignite',
+          target: 'crucible',
+          hint: 'Hold the Mg ribbon in a Bunsen flame until it ignites. Then hold over a watch glass. It burns with an intensely bright white flame.'
+        },
+        {
+          id: 'observe_product',
+          action: 'observe',
+          hint: 'White MgO powder forms. Note: attempting to extinguish with CO₂ or water is ineffective — Mg burns in CO₂ (forming C + MgO) and water (forming MgO + H₂).'
+        }
+      ],
+      result: {
+        color: 'rgba(255, 255, 255, 0.90)',
+        equation: '2Mg(s) + O₂(g) → 2MgO(s)  (white, ΔH = −601 kJ/mol)\n3Mg(s) + N₂(g) → Mg₃N₂(s)  (minor product)',
+        observations: [
+          'Intensely bright white flame — dangerous UV emission, do not look directly.',
+          'White MgO powder forms as the product.',
+          'Burns in CO₂ and water — cannot be extinguished with them.',
+          'Flame temperature ≈3100°C.'
+        ]
+      }
+    },
+    {
+      id: 'iron_burning_oxygen',
+      name: 'Iron Wool Burning in Oxygen',
+      type: 'redox',
+      theory:
+        'Iron wool burns vigorously in pure oxygen producing Fe₃O₄ (magnetite) — a mixed oxide. It does not burn in air under normal conditions but ignites easily when the surface area is increased (wool form).',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'generate_o2',
+          action: 'mix',
+          target: 'flask',
+          chemicals: ['Hydrogen Peroxide', 'Manganese Dioxide'],
+          hint: 'Generate O₂ in a wide-mouthed flask by adding Manganese Dioxide to Hydrogen Peroxide. Allow O₂ to fill the flask.'
+        },
+        {
+          id: 'ignite_iron',
+          action: 'ignite',
+          chemical: 'Iron',
+          hint: 'Ignite a piece of iron wool in a Bunsen flame until glowing red. Quickly insert into the O₂-filled flask.'
+        },
+        {
+          id: 'observe',
+          action: 'observe',
+          hint: 'The iron burns vigorously with bright orange sparks in pure O₂, producing a shower of black Fe₃O₄ particles.'
+        }
+      ],
+      result: {
+        color: 'rgba(255, 140, 0, 0.7)',
+        equation: '3Fe(s) + 2O₂(g) → Fe₃O₄(s)  (black magnetite)',
+        observations: [
+          'Iron wool glows and burns vigorously with bright orange/yellow sparks.',
+          'Black Fe₃O₄ (magnetite) particles form and fall to the bottom.',
+          'Burns in pure O₂ but not in air — too slow in 21% O₂.',
+          'The product is magnetic — can be tested with a magnet.'
+        ]
+      }
+    },
+    {
+      id: 'sulfur_burning',
+      name: 'Sulfur Combustion and SO₂ Test',
+      type: 'redox',
+      theory:
+        'Sulfur burns in air with a blue flame to produce SO₂ gas, which has a pungent suffocating smell and decolorises acidified KMnO₄ solution.',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'ignite_sulfur',
+          action: 'ignite',
+          chemical: 'Sulfur',
+          hint: 'Heat a spatula of Sulfur in a Bunsen flame. It melts first, then ignites with a pale blue flame.'
+        },
+        {
+          id: 'test_so2',
+          action: 'bubble_through',
+          target: 'kmno4_tube',
+          chemical: 'Potassium Permanganate Solution',
+          hint: 'Hold the burning sulfur near the mouth of a tube containing acidified Potassium Permanganate Solution. The purple color decolorises to confirm SO₂.'
+        }
+      ],
+      result: {
+        color: 'rgba(220, 252, 231, 0.3)',
+        equation: 'S(s) + O₂(g) → SO₂(g)  (pale blue flame)\n5SO₂ + 2MnO₄⁻ + 2H₂O → 5SO₄²⁻ + 2Mn²⁺ + 4H⁺',
+        observations: [
+          'Sulfur burns with a characteristic pale blue flame.',
+          'Pungent suffocating smell of SO₂ (burning matches smell).',
+          'Purple KMnO₄ decolorises to colourless — confirms SO₂ (reducing gas).'
+        ]
+      }
+    },
+    {
+      id: 'chromate_dichromate_equilibrium',
+      name: 'Chromate/Dichromate pH Equilibrium',
+      type: 'acid_base',
+      theory:
+        'CrO₄²⁻ (yellow) and Cr₂O₇²⁻ (orange) exist in equilibrium. Adding acid converts yellow chromate to orange dichromate; adding base reverses it. A vivid colour demonstration of pH-controlled equilibrium.',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'add_chromate',
+          action: 'pour',
+          target: 'beaker',
+          chemical: 'Potassium Chromate',
+          volume: 20,
+          hint: 'Dissolve Potassium Chromate in 20 mL water. The solution is bright yellow (CrO₄²⁻, alkaline/neutral conditions).'
+        },
+        {
+          id: 'add_acid',
+          action: 'drop',
+          chemical: 'Hydrochloric Acid Solution',
+          hint: 'Add Hydrochloric Acid Solution dropwise. The yellow immediately turns orange — CrO₄²⁻ converts to Cr₂O₇²⁻ in acid.'
+        },
+        {
+          id: 'add_base',
+          action: 'drop',
+          chemical: 'Sodium Hydroxide Solution',
+          hint: 'Now add Sodium Hydroxide Solution. The orange turns back to yellow — Cr₂O₇²⁻ reconverts to CrO₄²⁻ in base. Fully reversible.'
+        }
+      ],
+      result: {
+        color: 'rgba(249, 115, 22, 0.55)',
+        equation: '2CrO₄²⁻ + 2H⁺ ⇌ Cr₂O₇²⁻ + H₂O   (yellow ⇌ orange)',
+        observations: [
+          'Yellow CrO₄²⁻ → orange Cr₂O₇²⁻ on adding acid.',
+          'Orange Cr₂O₇²⁻ → yellow CrO₄²⁻ on adding base.',
+          'Completely reversible — excellent demonstration of acid-base equilibrium and chromium chemistry.'
+        ]
+      }
+    },
+    {
+      id: 'disappearing_cross',
+      name: 'Disappearing Cross (Na₂S₂O₃ + HCl)',
+      type: 'kinetics',
+      theory:
+        'Sodium thiosulfate reacts with hydrochloric acid to produce a colloidal sulfur precipitate, which gradually makes the solution opaque. Used to study reaction rates — time is measured until a black cross under the flask disappears.',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'setup_cross',
+          action: 'observe',
+          hint: 'Place a conical flask on a piece of paper with a black cross drawn on it. The cross should be visible through the bottom of the flask.'
+        },
+        {
+          id: 'add_thiosulfate',
+          action: 'pour',
+          target: 'flask',
+          chemical: 'Sodium Thiosulfate Solution',
+          volume: 50,
+          hint: 'Add 50 mL of Sodium Thiosulfate Solution to the flask. The solution is clear.'
+        },
+        {
+          id: 'add_acid_start_timer',
+          action: 'pour',
+          target: 'flask',
+          chemical: 'Hydrochloric Acid Solution',
+          volume: 5,
+          hint: 'Add 5 mL of Hydrochloric Acid Solution and immediately start the timer. Swirl once to mix.'
+        },
+        {
+          id: 'observe_until_opaque',
+          action: 'observe',
+          hint: 'Watch the cross through the flask. The solution gradually becomes milky/opaque. Stop the timer when the cross is no longer visible. Repeat at different temperatures to study kinetics.'
+        }
+      ],
+      result: {
+        color: 'rgba(255, 255, 220, 0.7)',
+        equation: 'Na₂S₂O₃ + 2HCl → 2NaCl + SO₂ + S↓ + H₂O\n(colloidal sulfur makes solution opaque)',
+        observations: [
+          'Solution gradually turns milky/opalescent as colloidal sulfur forms.',
+          'Cross disappears after a reproducible time interval.',
+          'Rate ∝ [Na₂S₂O₃] and [HCl] — both concentrations affect the disappearance time.',
+          'Temperature increase significantly shortens the time (Arrhenius behaviour).'
+        ]
+      }
+    },
+    {
+      id: 'lead_chromate_precipitation',
+      name: 'Lead Chromate Precipitation (Yellow)',
+      type: 'precipitation',
+      theory:
+        'Lead(II) ions react with chromate ions to form a bright canary-yellow insoluble precipitate. This is the confirmatory test for Pb²⁺ in the presence of chromate.',
+      initialChemicals: [],
+      steps: [
+        {
+          id: 'add_lead',
+          action: 'pour',
+          target: 'tube',
+          chemical: 'Lead(II) Nitrate Solution',
+          volume: 5,
+          hint: 'Add 5 mL of Lead(II) Nitrate Solution to the test tube.'
+        },
+        {
+          id: 'add_chromate',
+          action: 'drop',
+          chemical: 'Potassium Chromate',
+          hint: 'Add a few drops of Potassium Chromate solution (yellow). A bright canary-yellow PbCrO₄ precipitate forms immediately.'
+        },
+        {
+          id: 'test_naoh',
+          action: 'drop',
+          chemical: 'Sodium Hydroxide Solution',
+          hint: 'Add NaOH — the yellow precipitate is insoluble in alkali (distinguishes from CrO₄²⁻ alone).'
+        }
+      ],
+      result: {
+        color: 'rgba(255, 215, 0, 0.80)',
+        precipitate: true,
+        equation: 'Pb²⁺ + CrO₄²⁻ → PbCrO₄↓ (canary yellow, Ksp = 1.8×10⁻¹⁴)',
+        observations: [
+          'Immediate bright canary-yellow precipitate of PbCrO₄.',
+          'Insoluble in dilute NaOH and dilute HNO₃.',
+          'Confirmatory test for Pb²⁺ in the presence of chromate indicator.'
+        ]
+      }
+    },
   ]
 } as const;
 

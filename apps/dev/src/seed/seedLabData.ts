@@ -42,11 +42,16 @@ export async function seedLabDataIfEmpty() {
 }
 
 export async function seedElementsIfEmpty() {
-  const count = await ElementModel.countDocuments();
+  await ElementModel.bulkWrite(
+    elementsSeed.map((element) => ({
+      updateOne: {
+        filter: { atomicNumber: element.atomic_number }, // or symbol
+        update: { $set: element },
+        upsert: true
+      }
+    })),
+    { ordered: false }
+  );
 
-  if (count === 0) {
-    await ElementModel.insertMany(elementsSeed);
-    console.log(`Elements seeded: ${elementsSeed.length}`);
-  }
+  console.log(`Elements seeded/updated: ${elementsSeed.length}`);
 }
-
