@@ -4,7 +4,7 @@ import { ExperimentGrid } from '../components/home/ExperimentGrid'
 
 export const Home = ({ onStart }: { onStart: () => void }) => {
   return (
-    <div className="min-h-screen bg-[#0A0A0C] flex flex-col items-center justify-center p-8 relative overflow-hidden">
+    <div className="bg-[#0A0A0C] flex flex-col items-center justify-center p-8 relative">
       
       {/* Background animation */}
       <div className="absolute inset-0 z-0 pointer-events-none">

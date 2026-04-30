@@ -33,7 +33,7 @@ export const Selection: React.FC<SelectionProps> = ({ onBack, onSelect }) => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0C] p-12 overflow-y-auto">
+    <div className="bg-[#0A0A0C] p-12">
       <button
         onClick={onBack}
         className="flex items-center gap-2 text-white/30 hover:text-lab-accent transition-colors mb-12 font-bold text-xs uppercase tracking-[0.2em]"

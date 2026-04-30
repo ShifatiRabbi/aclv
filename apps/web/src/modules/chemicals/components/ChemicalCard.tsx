@@ -12,31 +12,38 @@ const ChemicalCard: React.FC<ChemicalCardProps> = ({ chemical, isActive, onClick
   return (
     <button
       onClick={() => onClick(chemical)}
-      className={`relative overflow-hidden flex flex-col p-3 rounded-xl border-2 transition-all duration-200 text-left group
+      className={`relative aspect-square overflow-hidden border bg-black/40 p-2 text-left backdrop-blur-md transition-all duration-300 group
         ${isActive 
-          ? 'border-blue-500 bg-blue-50 shadow-md transform scale-102' 
-          : 'border-slate-200 bg-white hover:border-blue-300 hover:shadow-sm active:scale-95'
+          ? 'border-orange-500 shadow-[0_0_15px_rgba(255,122,24,0.35)]'
+          : 'border-white/15 hover:border-orange-400 hover:shadow-[0_0_15px_rgba(255,122,24,0.2)]'
         }`}
     >
-      <div className="flex justify-between items-start mb-1">
-        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-blue-400 transition-colors">
-          {chemical.state}
-        </span>
-        <div 
-          className="w-3 h-3 rounded-full border border-slate-200" 
-          style={{ backgroundColor: chemical.color }}
-        />
-      </div>
-      <h3 className="font-bold text-slate-800 text-sm truncate leading-tight">
-        {chemical.name}
-      </h3>
-      <p className="font-mono text-xs font-bold text-blue-600 mt-0.5">
-        {chemical.formula}
-      </p>
-      
-      {/* Visual State Indicator */}
-      <div className="absolute -bottom-1 -right-1 opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity">
-        <span className="text-3xl font-mono">{chemical.formula.charAt(0)}</span>
+      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+
+      <div className="relative z-10 flex h-full flex-col justify-between">
+        <div className="flex items-start justify-between">
+          <span className="text-[10px] font-mono leading-none text-gray-500">
+            {chemical.id}
+          </span>
+          <div
+            className="h-3 w-3 rounded-full border border-white/20"
+            style={{ backgroundColor: chemical.color }}
+          />
+        </div>
+
+        <div className="flex flex-col items-center">
+          <h3 className="text-base font-bold tracking-tight text-white transition-colors group-hover:text-orange-400 md:text-lg">
+            {chemical.formula}
+          </h3>
+          <p className="line-clamp-1 text-[10px] uppercase tracking-wider text-gray-400">
+            {chemical.name}
+          </p>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <span className="text-[9px] font-mono uppercase tracking-wider text-gray-500">{chemical.state}</span>
+          <span className="text-[9px] font-mono text-gray-500">{chemical.molecularWeight.toFixed(1)}</span>
+        </div>
       </div>
     </button>
   );

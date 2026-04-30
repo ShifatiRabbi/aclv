@@ -14,7 +14,7 @@ export const ChemicalLibrary: React.FC = () => {
   )
 
   return (
-    <div className="w-80 h-full bg-[#0F0F12] border-r border-white/5 flex flex-col">
+    <div className="w-full bg-[#0F0F12] border-r border-white/5 flex flex-col xl:w-80">
       <div className="p-6 border-b border-white/5 bg-black/20">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
@@ -38,7 +38,7 @@ export const ChemicalLibrary: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-2">
+      <div className="flex-1 p-4 space-y-2">
         {filtered.map((chemical) => (
           <motion.div
             key={chemical.id}

@@ -7,10 +7,10 @@ import FAB from '../../modules/public/components/FAB'
 
 export default function MainLayout() {
   return (
-    <div className="min-h-screen bg-background text-on-surface font-sans">
+    <div className="flex min-h-[100dvh] flex-col bg-background text-on-surface font-sans">
       <MarqueeBar />
       <TopNavbar />
-      <main className="pt-28 overflow-x-hidden">
+      <main className="flex-1 overflow-visible pt-28">
         <Outlet />
       </main>
       <Footer />

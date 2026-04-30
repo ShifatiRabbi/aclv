@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Material Icons base styles */
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
@@ -70,11 +83,9 @@
 }
 
 body {
-  margin: 0;
   background-color: #1c110b;
   color: #f5ded3;
-  overflow-x: hidden;
-  min-height: 100dvh;
+  min-height: 100%;
   font-family: 'Inter', sans-serif;
 }
 

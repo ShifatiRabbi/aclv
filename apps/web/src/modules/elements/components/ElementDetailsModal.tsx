@@ -60,7 +60,7 @@ export function ElementDetailsModal({ element, reactions, onClose, loading }: El
             </div>
 
             {/* Body */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
+            <div className="flex-1 p-6 space-y-8 custom-scrollbar">
               {/* Top Section: Quick Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <QuickStat label="Atomic Mass" value={`${element.atomic_mass.toFixed(4)} u`} icon={<Activity size={16} />} />

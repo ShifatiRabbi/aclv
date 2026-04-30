@@ -23,7 +23,7 @@ const App: React.FC = () => {
   } = useEquipment();
 
   return (
-    <div className="min-h-screen bg-surface text-on-surface font-sans overflow-x-hidden">
+    <div className="min-h-full bg-surface text-on-surface font-sans">
       <main className="pb-28 particle-bg">
         <section className="relative px-6 md:px-12 pt-10 pb-8 max-w-7xl mx-auto">
           <div className="absolute -top-20 -left-20 w-64 h-64 bg-primary-container/20 rounded-full blur-[100px] pointer-events-none" />
