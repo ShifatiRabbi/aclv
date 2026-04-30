@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
             </a>
           </div>
           <p className="text-[10px] tracking-widest uppercase text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
-            © 2024 NEUROCHEM VIRTUAL LABS. MOLECULAR PRECISION SECURED.
+            © 2024 Reaxorium - Shifati Rabbi. All rights reserved.
           </p>
         </div>
       </div>

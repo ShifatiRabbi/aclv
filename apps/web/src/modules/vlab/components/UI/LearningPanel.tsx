@@ -10,7 +10,7 @@ export const LabHeader: React.FC = () => {
       <div className="flex items-center gap-4">
         <div className="w-8 h-8 rounded bg-lab-accent flex items-center justify-center font-bold text-black text-sm">CH</div>
         <h1 className="text-sm font-semibold tracking-tight uppercase text-white/90">
-          Virtual Lab <span className="text-white/40 font-normal ml-2">— v2</span>
+          Reaxorium <span className="text-white/40 font-normal ml-2">— v2</span>
         </h1>
       </div>
 

@@ -1,8 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import { useState, useEffect } from 'react';
 import type { Element, Reaction } from '../types';
 import { fetchElementById, fetchElementReactions } from '../api';

@@ -38,7 +38,7 @@ export const ChemicalLibrary: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex-1 p-4 space-y-2">
+      <div className="h-[700px]  p-4 space-y-2 overflow-y-auto custom-scrollbar">
         {filtered.map((chemical) => (
           <motion.div
             key={chemical.id}

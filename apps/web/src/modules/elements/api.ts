@@ -1,7 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
 
 import type { Element, Reaction } from './types';
 import { getElementById, getElementReactions, getElements } from '../../services/elements.service'

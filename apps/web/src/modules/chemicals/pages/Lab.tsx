@@ -73,7 +73,7 @@ const Lab: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-          <aside className="lg:col-span-4 xl:col-span-3">
+          <aside className="lg:col-span-4 xl:col-span-3  overflow-y-auto h-screen custom-scrollbar">
             <div className="rounded-2xl border border-white/10 bg-black/40 p-4 backdrop-blur-md">
               <h2 className="mb-4 text-xs font-bold uppercase tracking-widest text-orange-400">Chemical Library</h2>
 
@@ -87,7 +87,7 @@ const Lab: React.FC = () => {
               {loadError}
             </div>
           )}
-              <div className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-4">
+              <div className="grid grid-cols-1 gap-2 md:grid-cols-1 xl:grid-cols-2">
             {chemicals.map(chem => (
               <ChemicalCard 
                 key={chem.id}
