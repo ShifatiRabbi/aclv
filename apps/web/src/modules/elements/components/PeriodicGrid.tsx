@@ -67,9 +67,9 @@ const elementPositions: Record<number, [number, number]> = {
 
 export function PeriodicGrid({ elements, onElementClick }: PeriodicGridProps) {
   return (
-    <div className="w-full overflow-x-auto pb-8 custom-scrollbar">
+    <div className="w-full pb-8 custom-scrollbar">
       <div 
-        className="grid grid-cols-18 gap-1 md:gap-2 min-w-[1000px] mx-auto p-4"
+        className="grid grid-cols-18 gap-1 md:gap-2 mx-auto p-4"
         id="periodic-grid"
       >
         {elements.map((element) => {

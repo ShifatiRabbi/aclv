@@ -14,7 +14,7 @@ const TopNavbar: React.FC = () => {
   ];
 
   return (
-    <header className="fixed top-8 w-full z-50 bg-slate-950/70 backdrop-blur-xl border-b border-white/10 flex justify-between items-center px-6 md:px-12 h-20 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+    <header className="fixed top-8 w-full z-50 bg-surface-container-low/90 backdrop-blur-xl border-b border-outline-variant/30 flex justify-between items-center px-6 md:px-12 h-20 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
       <Link to="/" className="flex items-center gap-2">
         <span className="material-symbols-outlined text-primary-container text-2xl orange-glow">science</span>
         <span className="text-xl md:text-2xl font-bold tracking-tighter text-primary-container orange-glow" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
@@ -30,7 +30,7 @@ const TopNavbar: React.FC = () => {
             className={`font-label-md text-sm uppercase tracking-wider transition-all ${
               location.pathname === link.path
                 ? 'text-primary-container border-b-2 border-primary-container pb-1'
-                : 'text-slate-400 hover:text-orange-400'
+                : 'text-on-surface-variant hover:text-primary-container'
             }`}
             style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}
           >
@@ -47,7 +47,7 @@ const TopNavbar: React.FC = () => {
         >
           OPEN VLAB
         </Link>
-        <button className="md:hidden text-on-surface p-2 rounded-full hover:bg-white/5 active:scale-95 transition-all">
+        <button className="md:hidden text-on-surface p-2 rounded-full hover:bg-surface-container active:scale-95 transition-all">
           <span className="material-symbols-outlined">menu</span>
         </button>
       </div>

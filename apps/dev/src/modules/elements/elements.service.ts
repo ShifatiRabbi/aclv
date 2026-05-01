@@ -1,10 +1,11 @@
-import fs from 'fs/promises';
-import type { Element, Reaction } from './types.ts';
 import { ElementModel } from '../../models/Element.ts';
+
+type Reaction = {
+  relatedElements: number[]
+}
 
 export class ElementsService {
   private static instance: ElementsService;
-  private elements: Element[] = [];
   private reactions: Reaction[] = [];
 
   private constructor() {}
@@ -16,12 +17,12 @@ export class ElementsService {
     return ElementsService.instance;
   }
 
-  async getAllElements(): Promise<Element[]> {
+  async getAllElements(): Promise<unknown[]> {
     return ElementModel.find();
   }
 
-  async getElementByAtomicNumber(atomicNumber: number): Promise<Element | null> {
-    return ElementModel.findOne({ atomic_number: atomicNumber });
+  async getElementByAtomicNumber(atomicNumber: number): Promise<unknown | null> {
+    return ElementModel.findOne({ atomic_number: atomicNumber } as never);
   }
 
   async getElementFullDataByElement(atomicNumber: number): Promise<Reaction[]> {

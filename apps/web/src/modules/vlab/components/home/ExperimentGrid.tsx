@@ -17,7 +17,7 @@ export const ExperimentGrid = ({ onStart }: { onStart: () => void }) => {
   }, [allExperiments])
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl w-full">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl w-full">
       {experimentTypes.map((expType) => {
         const config = typeConfig[expType.type]
 

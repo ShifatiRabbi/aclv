@@ -25,7 +25,7 @@ export default function ElementsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#050505] text-gray-100 selection:bg-orange-500/30">
+    <div className="bg-[#050505] pb-10 text-gray-100 selection:bg-orange-500/30">
       {/* Background patterns */}
       <div className="fixed inset-0 pointer-events-none opacity-20">
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
@@ -90,7 +90,7 @@ export default function ElementsPage() {
       </main>
 
       {/* Bottom Info Bar */}
-      <footer className="fixed bottom-0 left-0 right-0 z-20 p-4 bg-black/60 backdrop-blur-md border-t border-white/5 flex justify-between items-center px-8">
+      <footer className="relative z-20 mt-8 border-t border-white/5 bg-black/60 p-4 px-8 backdrop-blur-md flex justify-between items-center">
         <div className="flex gap-8">
            <FooterStat label="DB STATUS" value="SYNCHRONIZED" color="text-green-500" />
            <FooterStat label="ELEMENTS" value={elements.length.toString()} color="text-orange-500" />

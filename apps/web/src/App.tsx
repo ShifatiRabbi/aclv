@@ -1,62 +1,48 @@
-import { useEffect, useState } from 'react'
-import { api } from './shared/utils/api'
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
-import AccessoriesApp from './modules/accessories/App'
-import ChemicalsApp from './modules/chemicals/App'
-import VlabApp from './modules/vlab/App'
-import HomePage from './modules/public/pages/HomePage'
-import MarqueeBar from './modules/public/components/MarqueeBar'
-import TopNavbar from './modules/public/components/TopNavbar'
-import Footer from './modules/public/components/Footer'
-import MobileBottomNav from './modules/public/components/MobileBottomNav'
-import FAB from './modules/public/components/FAB'
-import ElementsPage from './modules/elements/pages/ElementsPage';
+import { lazy, Suspense } from 'react'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import MainLayout from './shared/layouts/MainLayout'
+import AdminLayout from './shared/layouts/AdminLayout'
+import StudentLayout from './shared/layouts/StudentLayout'
 
-function ShellLayout({ status }: { status: string }) {
-  return (
-    <div className="min-h-screen bg-background text-on-surface font-body-md">
-      <MarqueeBar />
-      <TopNavbar />
-      <main className="pt-28 overflow-x-hidden">
-        <Outlet context={{ status }} />
-      </main>
-      <Footer />
-      <MobileBottomNav />
-      <FAB />
-    </div>
-  )
-}
+const AccessoriesApp = lazy(() => import('./modules/accessories/App'))
+const ChemicalsApp = lazy(() => import('./modules/chemicals/App'))
+const VlabApp = lazy(() => import('./modules/vlab/App'))
+const HomePage = lazy(() => import('./modules/public/pages/HomePage'))
+const ElementsPage = lazy(() => import('./modules/elements/pages/ElementsPage'))
+const AdminDashboardPage = lazy(() => import('./modules/admin/pages/AdminDashboardPage'))
+const StudentDashboardPage = lazy(() => import('./modules/student/pages/StudentDashboardPage'))
 
 function App() {
-  const [status, setStatus] = useState('Loading...');
-
-  useEffect(() => {
-    api.get('/health')
-      .then(res => setStatus(res.data.status))
-      .catch(() => setStatus('API error'));
-  }, []);
-
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Full-screen modules without shell */}
-        <Route path="/chemicals/*" element={<ChemicalsApp />} />
-        <Route path="/vlab/*" element={<VlabApp />} />
+      <Suspense fallback={<div className="p-8 text-center text-on-surface-variant">Loading...</div>}>
+        <Routes>
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/chemicals/*" element={<ChemicalsApp />} />
+            <Route path="/vlab/*" element={<VlabApp />} />
+            <Route path="/simulations" element={<VlabApp />} />
+            <Route path="/elements" element={<ElementsPage />} />
+            <Route path="/accessories" element={<AccessoriesApp />} />
+          </Route>
 
-        {/* Default shell with new design */}
-        <Route element={<ShellLayout status={status} />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/accessories" element={<AccessoriesApp />} />
-          <Route path="/simulations" element={<VlabApp />} />
-          <Route path="/elements" element={<ElementsPage />} />
-          <Route path="/inventory" element={<div className="p-8 text-center text-slate-400">Inventory page coming soon.</div>} />
-          <Route path="/analysis" element={<div className="p-8 text-center text-slate-400">Analysis page coming soon.</div>} />
-          <Route path="/documentation" element={<div className="p-8 text-center text-slate-400">Documentation page coming soon.</div>} />
-          <Route path="*" element={<div className="p-8 text-center text-slate-400">Page not found.</div>} />
-        </Route>
-      </Routes>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<AdminDashboardPage />} />
+          </Route>
+
+          <Route path="/student" element={<StudentLayout />}>
+            <Route index element={<StudentDashboardPage />} />
+          </Route>
+
+          <Route path="/teacher" element={<StudentLayout />}>
+            <Route index element={<StudentDashboardPage />} />
+          </Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
-  );
+  )
 }
 
 export default App

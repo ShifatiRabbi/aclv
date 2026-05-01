@@ -1,8 +1,6 @@
 import React from "react";
 import { useEquipment } from "./hooks/useEquipment";
 
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
 import MainLayout from "./components/layout/MainLayout";
 
 import EquipmentSelector from "./components/sidebar/EquipmentSelector";
@@ -25,10 +23,8 @@ const App: React.FC = () => {
   } = useEquipment();
 
   return (
-    <div className="min-h-screen bg-surface text-on-surface font-sans overflow-x-hidden">
-      <Header />
-
-      <main className="pt-28 pb-28 particle-bg">
+    <div className="min-h-full bg-surface text-on-surface font-sans">
+      <main className="pb-28 particle-bg">
         <section className="relative px-6 md:px-12 pt-10 pb-8 max-w-7xl mx-auto">
           <div className="absolute -top-20 -left-20 w-64 h-64 bg-primary-container/20 rounded-full blur-[100px] pointer-events-none" />
           <div className="absolute top-40 -right-20 w-80 h-80 bg-tertiary-container/10 rounded-full blur-[120px] pointer-events-none" />
@@ -125,8 +121,6 @@ const App: React.FC = () => {
           />
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };

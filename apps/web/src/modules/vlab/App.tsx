@@ -1,6 +1,5 @@
 import React from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { api } from '../../shared/utils/api'
 import { Home } from './pages/Home'
 import { Selection } from './pages/Selection'
 import { LabArea } from './components/Lab/LabArea'
@@ -9,6 +8,8 @@ import { LearningPanel, LabHeader } from './components/UI/LearningPanel'
 import { Result } from './components/UI/Result'
 import { ChemicalLibrary } from './components/Lab/ChemicalLibrary'
 import { useLabStore } from './store/useLabStore'
+import { getChemicals } from '../../services/chemicals.service'
+import { getReactions } from '../../services/reactions.service'
 
 type Page = 'home' | 'selection' | 'lab'
 
@@ -17,14 +18,12 @@ export default function VirtualLabApp() {
   const { currentExperiment, resetLab, showResult, setAllChemicals, setAllExperiments } = useLabStore()
 
  React.useEffect(() => {
-  api
-    .get('/chemicals')
-    .then((res) => setAllChemicals(res.data?.chemicals ?? []))
+  getChemicals()
+    .then((items) => setAllChemicals(items))
     .catch((err) => console.error('Chemical fetch error', err))
   
-  api
-    .get('/reactions')
-    .then((res) => setAllExperiments(res.data?.experiments ?? []))
+  getReactions()
+    .then((items) => setAllExperiments(items))
     .catch((err) => console.error('Experiment fetch error', err))
 }, [])
 
@@ -36,7 +35,7 @@ export default function VirtualLabApp() {
   }
 
   return (
-    <div className="h-screen w-screen bg-[#0A0A0C] text-[#E0E0E0] font-sans flex flex-col select-none">
+    <div className="w-full bg-[#0A0A0C] text-[#E0E0E0] font-sans flex flex-col select-none">
       <AnimatePresence mode="wait">
         {page === 'home' && (
           <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex-1">
@@ -62,10 +61,10 @@ export default function VirtualLabApp() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="flex-1 flex flex-col min-h-0"
+            className="flex-1 flex flex-col"
           >
             <LabHeader />
-            <main className="flex-1 flex min-h-0 relative">
+            <main className="flex-1 flex flex-col xl:flex-row relative">
               <ChemicalLibrary />
               <div className="flex-1 flex flex-col relative">
                 <LearningPanel />

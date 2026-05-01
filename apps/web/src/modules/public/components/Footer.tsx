@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-950 border-t border-white/5 pt-16 pb-24 md:pb-12 px-6 md:px-12">
+    <footer className="bg-surface-container-low border-t border-outline-variant/30 pt-16 pb-24 md:pb-12 px-6 md:px-12">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
         <div>
           <div className="flex items-center gap-2 mb-6">
             <span className="material-symbols-outlined text-primary-container text-xl">science</span>
             <span className="text-xl font-bold text-white/90" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-              NEUROCHEM_LAB
+              Reaxorium
             </span>
           </div>
           <p className="text-slate-600 text-sm leading-relaxed max-w-xs" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Advancing scientific research through high-fidelity virtual simulation and molecular precision environments.
+            Chemistry learning platform for virtual labs, molecules, and experiment-grade workflows.
           </p>
         </div>
         
@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
             </a>
           </div>
           <p className="text-[10px] tracking-widest uppercase text-slate-700" style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 600 }}>
-            © 2024 NEUROCHEM VIRTUAL LABS. MOLECULAR PRECISION SECURED.
+            © 2024 Reaxorium - Shifati Rabbi. All rights reserved.
           </p>
         </div>
       </div>

@@ -1,15 +1,13 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { api } from '../../../shared/utils/api'
 import type { Chemical } from '../types';
 import ChemicalCard from '../components/ChemicalCard';
 import Beaker from '../components/Beaker';
 import CalculationPanel from '../components/CalculationPanel';
 import ControlPanel from '../components/ControlPanel';
-import './Lab.css'
+import { getChemicals } from '../../../services/chemicals.service';
 
 const Lab: React.FC = () => {
-  const [leftPanelWidth, setLeftPanelWidth] = useState(20);
   const [chemicals, setChemicals] = useState<Chemical[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [loadError, setLoadError] = useState<string | null>(null)
@@ -17,24 +15,24 @@ const Lab: React.FC = () => {
   const [volume, setVolume] = useState(250);
   const [mass, setMass] = useState(15);
   const [isLiquidMode, setIsLiquidMode] = useState(false);
-  const [isResizing, setIsResizing] = useState(false);
 
   useEffect(() => {
     let mounted = true
     setIsLoading(true)
     setLoadError(null)
-    api
-      .get('/chemicals')
-      .then((res) => {
+    getChemicals()
+      .then((list) => {
         if (!mounted) return
-        const list = (res.data?.chemicals ?? []) as Chemical[]
         setChemicals(list)
         setActiveChemical(list[0] ?? null)
+        if (list.length === 0) {
+          setLoadError('No chemicals found in database. Please run seed script.')
+        }
       })
       .catch((err) => {
         if (!mounted) return
-        console.error('Failed to load chemicals', err)
-        setLoadError('Failed to load chemicals from database.')
+        console.error('Failed to load chemicals', err?.response?.data ?? err)
+        setLoadError('Failed to load chemicals from API (/api/chemicals).')
         setChemicals([])
         setActiveChemical(null)
       })
@@ -61,57 +59,35 @@ const Lab: React.FC = () => {
     return (mass * 1000) / (activeChemical.molecularWeight * volume);
   }, [mass, volume, activeChemical, isLiquidMode]);
 
-  const handleResize = (e: MouseEvent) => {
-    if (!isResizing) return;
-    const newWidth = (e.clientX / window.innerWidth) * 100;
-    if (newWidth > 15 && newWidth < 45) setLeftPanelWidth(newWidth);
-  };
-
-  useEffect(() => {
-    const handleMouseUp = () => setIsResizing(false);
-    if (isResizing) {
-      window.addEventListener('mousemove', handleResize);
-      window.addEventListener('mouseup', handleMouseUp);
-    }
-    return () => {
-      window.removeEventListener('mousemove', handleResize);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isResizing]);
-
-  const gridCols = useMemo(() => {
-    if (leftPanelWidth < 25) return 'grid-cols-2';
-    if (leftPanelWidth < 35) return 'grid-cols-3';
-    return 'grid-cols-4';
-  }, [leftPanelWidth]);
-
   return (
-    <div className="flex h-screen bg-slate-100 overflow-hidden font-sans">
-      {/* Sidebar: Library */}
-      <div 
-        className="bg-white border-r border-slate-200 flex flex-col shadow-xl z-20"
-        style={{ width: `${leftPanelWidth}%` }}
-      >
-        <div className="p-6 border-b border-slate-100 flex-shrink-0">
-          <h1 className="text-2xl font-black text-slate-800 tracking-tighter flex items-center gap-1">
-            <span className="text-blue-600">LAB</span>SENTRY
-            <span className="text-[10px] font-bold bg-blue-600 text-white px-1.5 py-0.5 rounded ml-2">PRO</span>
+    <div className="w-full bg-[#050505] px-4 pb-12 text-gray-100 md:px-8">
+      <section className="mx-auto max-w-7xl pt-8">
+        <div className="mb-10 flex flex-col gap-4">
+          <span className="text-xs font-bold uppercase tracking-widest text-orange-500">Chemical Repository</span>
+          <h1 className="text-5xl font-black uppercase tracking-tight text-white md:text-6xl">
+            Chemicals<span className="text-orange-500">.</span>
           </h1>
-          <p className="text-[9px] text-slate-400 font-black uppercase tracking-[0.2em] mt-1">Advanced Chemical Synthesis</p>
+          <p className="max-w-2xl text-sm text-gray-400">
+            Unified experiment-grade chemical catalog with the same visual system used by the Elements module.
+          </p>
         </div>
-        
-        <div className="flex-1 overflow-y-auto p-4 scroll-smooth">
+
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+          <aside className="lg:col-span-4 xl:col-span-3  overflow-y-auto h-screen custom-scrollbar">
+            <div className="rounded-2xl border border-white/10 bg-black/40 p-4 backdrop-blur-md">
+              <h2 className="mb-4 text-xs font-bold uppercase tracking-widest text-orange-400">Chemical Library</h2>
+
           {isLoading && (
-            <div className="p-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                <div className="p-4 text-xs font-bold uppercase tracking-widest text-gray-500">
               Loading chemical database…
             </div>
           )}
           {!isLoading && loadError && (
-            <div className="p-4 text-xs font-bold text-red-500 uppercase tracking-widest">
+                <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-xs font-bold uppercase tracking-widest text-red-300">
               {loadError}
             </div>
           )}
-          <div className={`grid gap-2 ${gridCols}`}>
+              <div className="grid grid-cols-1 gap-2 md:grid-cols-1 xl:grid-cols-2">
             {chemicals.map(chem => (
               <ChemicalCard 
                 key={chem.id}
@@ -120,48 +96,35 @@ const Lab: React.FC = () => {
                 onClick={(c) => setActiveChemical(c)}
               />
             ))}
-          </div>
-        </div>
-      </div>
+                {!isLoading && chemicals.length === 0 && !loadError && (
+                  <p className="p-4 text-xs uppercase tracking-wider text-gray-400">No records available.</p>
+                )}
+              </div>
+            </div>
+          </aside>
 
-      {/* Resizer */}
-      <div 
-        onMouseDown={() => setIsResizing(true)}
-        className="w-1 cursor-col-resize hover:bg-blue-400 active:bg-blue-600 transition-colors z-30"
-      />
-
-      {/* Main Simulation Area */}
-      <div className="flex-1 overflow-y-auto relative bg-[#fcfcfc]">
-        {/* Background Grid Accent */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-
-        <div className="max-w-7xl mx-auto p-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            
-            {/* Visual Center (Col 1-8) */}
-            <div className="lg:col-span-8 flex flex-col items-center">
-              {!activeChemical ? (
-                <div className="w-full bg-white border border-slate-200 rounded-2xl p-8 text-center text-slate-500">
-                  <div className="text-xs font-black uppercase tracking-[0.2em] mb-2">No chemical loaded</div>
-                  <p className="text-sm">Start the backend and ensure MongoDB has seeded chemical data.</p>
-                </div>
-              ) : (
-                <>
-                  <div className="text-center mb-10 w-full">
-                    <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 bg-slate-800 text-white rounded-full text-[10px] font-black uppercase tracking-widest">
-                      Active Specimen: {activeChemical.id}
-                    </div>
-                    <h2 className="text-5xl font-black text-slate-900 tracking-tighter mb-2">
-                      {activeChemical.name}
-                    </h2>
-                    <div className="flex justify-center gap-4 text-sm font-mono">
-                      <span className="text-blue-600 font-bold bg-blue-50 px-3 py-1 rounded-lg border border-blue-100">{activeChemical.formula}</span>
-                      <span className="text-slate-400 font-bold bg-slate-100 px-3 py-1 rounded-lg border border-slate-200 uppercase">{isLiquidMode ? 'In Solution' : activeChemical.state}</span>
+          <div className="lg:col-span-8 xl:col-span-9">
+            {!activeChemical ? (
+              <div className="rounded-2xl border border-white/10 bg-black/40 p-8 text-center text-slate-300 backdrop-blur-md">
+                <div className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-orange-400">No chemical loaded</div>
+                <p className="text-sm">Ensure backend is running and data is seeded correctly.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-8 xl:grid-cols-12">
+                <div className="xl:col-span-8">
+                  <div className="mb-6 rounded-2xl border border-white/10 bg-black/40 p-6 text-center backdrop-blur-md">
+                    <h2 className="text-4xl font-black tracking-tight text-white">{activeChemical.name}</h2>
+                    <div className="mt-3 flex justify-center gap-3 text-xs font-bold">
+                      <span className="rounded-full border border-orange-500/40 bg-orange-500/10 px-3 py-1 font-mono text-orange-300">
+                        {activeChemical.formula}
+                      </span>
+                      <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 uppercase text-gray-300">
+                        {isLiquidMode ? 'solution' : activeChemical.state}
+                      </span>
                     </div>
                   </div>
 
-                  <div className="relative p-16 bg-white border border-slate-200 rounded-[3rem] shadow-sm overflow-hidden mb-12">
-                    <div className="absolute top-0 left-0 w-full h-2 bg-blue-500/10" />
+                  <div className="mb-8 rounded-[2rem] border border-white/10 bg-black/30 p-8 backdrop-blur-md">
                     <Beaker 
                       volume={volume}
                       mass={mass}
@@ -169,68 +132,51 @@ const Lab: React.FC = () => {
                       isLiquidMode={isLiquidMode}
                       molarity={molarity}
                     />
-                    {/* Bench shadow */}
-                    <div className="w-64 h-4 bg-slate-900/5 blur-xl rounded-full mx-auto mt-4" />
                   </div>
 
-                  <div className="w-full max-w-lg">
-                    <ControlPanel 
-                      chemical={activeChemical}
-                      volume={volume}
-                      mass={mass}
-                      isLiquidMode={isLiquidMode}
-                      onVolumeChange={setVolume}
-                      onMassChange={setMass}
-                      onToggleLiquidMode={setIsLiquidMode}
-                    />
-                  </div>
-                </>
-              )}
-            </div>
-
-            {/* Scientific Info (Col 9-12) */}
-            <div className="lg:col-span-4 space-y-6">
-              {activeChemical && (
-                <CalculationPanel 
-                  chemical={activeChemical}
-                  volume={volume}
-                  mass={mass}
-                  molarity={molarity}
-                  isLiquidMode={isLiquidMode}
-                />
-              )}
-
-              {/* Chemical Description Block */}
-              <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Scientific Profile</h3>
-                <div className="prose prose-sm text-slate-600 leading-relaxed font-medium">
-                  {activeChemical?.description ?? 'No description available.'}
+                  <ControlPanel 
+                    chemical={activeChemical}
+                    volume={volume}
+                    mass={mass}
+                    isLiquidMode={isLiquidMode}
+                    onVolumeChange={setVolume}
+                    onMassChange={setMass}
+                    onToggleLiquidMode={setIsLiquidMode}
+                  />
                 </div>
-                
-                <div className="mt-8 pt-6 border-t border-slate-100 grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-[9px] font-bold text-slate-400 uppercase mb-1">MW (Molar Mass)</p>
-                    <p className="text-sm font-black text-slate-800">{activeChemical ? `${activeChemical.molecularWeight.toFixed(2)} g/mol` : 'N/A'}</p>
-                  </div>
-                  <div>
-                    <p className="text-[9px] font-bold text-slate-400 uppercase mb-1">Density</p>
-                    <p className="text-sm font-black text-slate-800">{activeChemical?.density ? `${activeChemical.density} g/cm³` : 'N/A'}</p>
+
+                <div className="space-y-6 xl:col-span-4">
+                  <CalculationPanel 
+                    chemical={activeChemical}
+                    volume={volume}
+                    mass={mass}
+                    molarity={molarity}
+                    isLiquidMode={isLiquidMode}
+                  />
+
+                  <div className="rounded-2xl border border-white/10 bg-black/40 p-6 backdrop-blur-md">
+                    <h3 className="mb-3 text-xs font-black uppercase tracking-[0.2em] text-orange-400">Scientific Profile</h3>
+                    <p className="text-sm leading-relaxed text-gray-300">
+                      {activeChemical.description ?? 'No description available.'}
+                    </p>
+
+                    <div className="mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-4">
+                      <div>
+                        <p className="mb-1 text-[10px] font-bold uppercase text-gray-500">Molar Mass</p>
+                        <p className="text-sm font-bold text-white">{activeChemical.molecularWeight.toFixed(2)} g/mol</p>
+                      </div>
+                      <div>
+                        <p className="mb-1 text-[10px] font-bold uppercase text-gray-500">Density</p>
+                        <p className="text-sm font-bold text-white">{activeChemical.density ? `${activeChemical.density} g/cm3` : 'N/A'}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-
-              <div className="p-6 bg-slate-900 rounded-2xl text-slate-400 text-xs flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold flex-shrink-0">i</div>
-                <p>
-                  Safety Note: Always handle {activeChemical?.name ?? 'chemicals'} according to standard lab protocol. Use
-                  appropriate PPE for {(activeChemical?.state ?? 'material').toString()} handling.
-                </p>
-              </div>
-            </div>
-
+            )}
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

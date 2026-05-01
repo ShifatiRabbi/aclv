@@ -7,10 +7,12 @@ import mongoose from 'mongoose'
 
 export async function seedLabDataIfEmpty() {
   if (mongoose.connection.readyState !== 1) return
+  const chemicalCollection = ChemicalModel as any
+  const experimentCollection = ExperimentModel as any
 
   // Upsert-based seeding so we can safely add new seed entries over time
   // without requiring an empty database.
-  await ChemicalModel.bulkWrite(
+  await chemicalCollection.bulkWrite(
     chemicalsSeed.chemicals.map((chemical) => ({
       updateOne: {
         filter: { id: chemical.id },
@@ -21,7 +23,7 @@ export async function seedLabDataIfEmpty() {
     { ordered: false }
   )
 
-  await ExperimentModel.bulkWrite(
+  await experimentCollection.bulkWrite(
     reactionsSeed.experiments.map((experiment) => ({
       updateOne: {
         filter: { id: experiment.id },
@@ -42,7 +44,8 @@ export async function seedLabDataIfEmpty() {
 }
 
 export async function seedElementsIfEmpty() {
-  const result = await ElementModel.bulkWrite(
+  const elementCollection = ElementModel as any
+  const result = await elementCollection.bulkWrite(
     elementsSeed.map((element) => ({
       updateOne: {
         filter: { atomic_number: element.atomic_number },
