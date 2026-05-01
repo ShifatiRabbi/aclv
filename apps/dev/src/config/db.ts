@@ -4,10 +4,9 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-mongoose.connect(process.env.MONGO_URI!)
-  .then(() => {
-    console.log('MongoDB connected')
-  })
-  .catch(err => {
-    console.error('DB connection failed', err)
-  })
+const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/virtual-chem-lab'
+
+export async function connectDb() {
+  await mongoose.connect(mongoUri)
+  console.log('MongoDB connected')
+}
