@@ -34,13 +34,12 @@ function App() {
             <Route path="/simulations" element={<VlabApp />} />
             <Route path="/elements" element={<ElementsPage />} />
             <Route path="/accessories" element={<AccessoriesApp />} />
+            <Route path="/auth/login" element={<LoginPage />} />
+            <Route path="/auth/register" element={<RegisterPage />} />
+            <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/auth/verify-email" element={<VerifyEmailPage />} />
           </Route>
-
-          <Route path="/auth/login" element={<LoginPage />} />
-          <Route path="/auth/register" element={<RegisterPage />} />
-          <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/auth/verify-email" element={<VerifyEmailPage />} />
 
           <Route element={<ProtectedRoute allowedRoles={['super_admin', 'admin']} />}>
             <Route path="/admin" element={<RoleLabLayout title="Admin Laboratory OS" />}>

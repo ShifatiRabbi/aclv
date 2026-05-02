@@ -22,12 +22,12 @@ export const registerSchema = z.object({
       email: z.string().email(),
       password: passwordSchema,
       role: z.enum(['student', 'teacher']),
-      institution: z.string().min(2).optional(),
-      qualification: z.string().min(2).optional(),
-      subjectExpertise: z.string().min(2).optional(),
-      classLevel: z.string().min(1).optional(),
-      referralCode: z.string().min(3).optional(),
-      promoCode: z.string().min(3).optional()
+      institution: z.string().optional(),
+      qualification: z.string().optional(),
+      subjectExpertise: z.string().optional(),
+      classLevel: z.string().optional(),
+      referralCode: z.string().optional(),
+      promoCode: z.string().optional()
     })
     .superRefine((value, ctx) => {
       if (value.role === 'teacher') {

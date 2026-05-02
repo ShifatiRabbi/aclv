@@ -7,7 +7,7 @@ import FAB from '../../modules/public/components/FAB'
 
 export default function MainLayout() {
   return (
-    <div className="flex min-h-[100dvh] flex-col bg-background text-on-surface font-sans">
+    <div id="scroll-container" className="flex min-h-dvh flex-col bg-background text-on-surface font-sans">
       <MarqueeBar />
       <TopNavbar />
       <main className="flex-1 overflow-visible pt-28">

@@ -9,8 +9,8 @@ const TopNavbar: React.FC = () => {
     { path: '/chemicals', label: 'Chemicals' },
     { path: '/elements', label: 'Elements' },
     { path: '/accessories', label: 'Accessories' },
-    { path: '/analysis', label: 'Analysis' },
-    { path: '/documentation', label: 'Documentation' },
+    { path: '/auth/login', label: 'Login' },
+    { path: '/about', label: 'About Us' },
   ];
 
   return (

@@ -1,8 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import React, { useState } from 'react';
 import { useElements } from '../hooks/useElements';
 import { useElementDetails } from '../hooks/useElementDetails';
@@ -25,14 +20,10 @@ export default function ElementsPage() {
   );
 
   return (
-    <div className="bg-[#050505] pb-10 text-gray-100 selection:bg-orange-500/30">
-      {/* Background patterns */}
-      <div className="fixed inset-0 pointer-events-none opacity-20">
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
-      </div>
+    <>
 
-      {/* Header */}
-      <header className="relative z-10 p-8 pt-12 max-w-7xl mx-auto">
+      {/* Top text part */}
+      <div className="relative z-10 p-8 max-w-7xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -69,10 +60,10 @@ export default function ElementsPage() {
              </div>
           </div>
         </motion.div>
-      </header>
+      </div>
 
       {/* Main Content */}
-      <main className="relative z-10 max-w-[1400px] mx-auto px-4">
+      <div className="relative z-10 max-w-350 mx-auto px-4">
         {listLoading ? (
           <div className="flex items-center justify-center h-64">
              <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
@@ -87,20 +78,7 @@ export default function ElementsPage() {
             onElementClick={(id) => setSelectedAtomicNumber(id)} 
           />
         )}
-      </main>
-
-      {/* Bottom Info Bar */}
-      <footer className="relative z-20 mt-8 border-t border-white/5 bg-black/60 p-4 px-8 backdrop-blur-md flex justify-between items-center">
-        <div className="flex gap-8">
-           <FooterStat label="DB STATUS" value="SYNCHRONIZED" color="text-green-500" />
-           <FooterStat label="ELEMENTS" value={elements.length.toString()} color="text-orange-500" />
-        </div>
-        <div className="hidden md:flex gap-4 text-[10px] text-gray-500 font-mono">
-           <span>LATENCY: 12ms</span>
-           <span>ENCRYPTION: AES-256</span>
-           <span>USER: GUEST_04</span>
-        </div>
-      </footer>
+      </div>
 
       {/* Details Modal */}
       <ElementDetailsModal 
@@ -109,7 +87,7 @@ export default function ElementsPage() {
         onClose={() => setSelectedAtomicNumber(null)}
         loading={detailLoading}
       />
-    </div>
+    </>
   );
 }
 
@@ -122,14 +100,5 @@ function TabButton({ children, active, icon }: { children: React.ReactNode, acti
       {icon}
       {children}
     </button>
-  );
-}
-
-function FooterStat({ label, value, color }: { label: string, value: string, color: string }) {
-  return (
-    <div className="flex items-center gap-2">
-       <span className="text-[10px] font-mono text-gray-600 font-bold uppercase">{label}</span>
-       <span className={`text-[11px] font-mono font-bold ${color}`}>{value}</span>
-    </div>
   );
 }
