@@ -62,6 +62,7 @@ export interface LabState {
   buretteError: boolean
   showResult: boolean
   history: string[]
+  visualPhase: 'idle' | 'pouring' | 'mixing' | 'reacting' | 'completed'
 
   // Economy & User (placeholder; persisted in BE later)
   points: number

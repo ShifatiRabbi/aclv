@@ -18,6 +18,8 @@ export const useSimulation = () => {
     setPrecipitateProgress,
     setBuretteError,
     setTitrantVolume,
+    setStirring,
+    setVisualPhase,
     completeExperiment,
     deductPoints
   } = useLabStore()
@@ -41,6 +43,7 @@ export const useSimulation = () => {
       if (validation.valid && selectedChemical) {
         addHistory(`Applied ${chemDisplayName} using ${selectedTool}`)
         deductPoints(selectedChemical.cost ?? 0)
+        setVisualPhase('reacting')
 
         if (action === 'pour' && currentStep.target === 'burette') {
           setBuretteError(false)
@@ -48,20 +51,33 @@ export const useSimulation = () => {
 
         if (action === 'pipette' || action === 'pour') {
           const newLevel = Math.min(100, liquidLevel + (currentStep.volume || 10))
+          const baseColor = selectedChemical.color || liquidColor
 
           if (currentStep.target === 'burette') {
             setTitrantVolume(0)
+            setVisualPhase('pouring')
+            addHistory('Burette charged and initial meniscus aligned.')
           }
 
-          let newColor = liquidColor
+          let newColor = baseColor
           if (selectedChemical.id.toLowerCase().includes('hcl')) newColor = 'rgba(255, 255, 255, 0.1)'
           if (selectedChemical.id.toLowerCase().includes('nacl')) newColor = 'rgba(255, 255, 255, 0.15)'
           updateLiquid(newLevel, newColor)
+
+          // Simulates real-world swirling right after transfer for immediate visual feedback.
+          setStirring(true)
+          setVisualPhase('mixing')
+          setTimeout(() => {
+            setStirring(false)
+            setVisualPhase('idle')
+          }, 1200)
         }
 
         if (action === 'drop') {
+          setVisualPhase('reacting')
           if (selectedChemical.id.toLowerCase().includes('pheno')) {
             addHistory('Indicator added: Preparation complete.')
+            updateLiquid(liquidLevel, 'rgba(255, 255, 255, 0.18)')
           }
           if (selectedChemical.id.toLowerCase().includes('agno3')) {
             setPrecipitateProgress(1.0)
@@ -104,6 +120,8 @@ export const useSimulation = () => {
       setPrecipitateProgress,
       setBuretteError,
       setTitrantVolume,
+      setStirring,
+      setVisualPhase,
       completeExperiment,
       deductPoints
     ]

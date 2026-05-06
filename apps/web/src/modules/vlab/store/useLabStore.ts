@@ -8,13 +8,16 @@ interface LabStore extends LabState {
   advanceStep: () => void
   updateLiquid: (level: number, color: string) => void
   setTitrating: (isTitrating: boolean) => void
-  setTitrantVolume: (volume: number) => void
+  setTitrantVolume: (volume: number | ((prev: number) => number)) => void
   setPrecipitateProgress: (progress: number) => void
   setError: (error: string | null) => void
   setBuretteError: (hasError: boolean) => void
+  setStirring: (isStirring: boolean) => void
+  setVisualPhase: (phase: LabState['visualPhase']) => void
   addHistory: (entry: string) => void
   resetLab: () => void
   completeExperiment: () => void
+  closeResult: () => void
 
   addPoints: (points: number) => void
   deductPoints: (points: number) => void
@@ -44,6 +47,7 @@ const initialState: LabState = {
   buretteError: false,
   showResult: false,
   history: [],
+  visualPhase: 'idle',
   points: 1000,
   inventory: []
 }
@@ -76,10 +80,15 @@ export const useLabStore = create<LabStore>((set) => ({
 
   updateLiquid: (level, color) => set({ liquidLevel: level, liquidColor: color }),
   setTitrating: (isTitrating) => set({ isTitrating }),
-  setTitrantVolume: (titrantVolume) => set({ titrantVolume }),
+  setTitrantVolume: (titrantVolume) =>
+    set((state) => ({
+      titrantVolume: typeof titrantVolume === 'function' ? titrantVolume(state.titrantVolume) : titrantVolume
+    })),
   setPrecipitateProgress: (precipitateProgress) => set({ precipitateProgress }),
   setError: (error) => set({ error }),
   setBuretteError: (buretteError) => set({ buretteError }),
+  setStirring: (isStirring) => set({ isStirring }),
+  setVisualPhase: (visualPhase) => set({ visualPhase }),
   addHistory: (entry) => set((state) => ({ history: [...state.history, entry] })),
 
   addPoints: (p) => set((state) => ({ points: state.points + p })),
@@ -92,6 +101,7 @@ export const useLabStore = create<LabStore>((set) => ({
       points: state.points
     })),
 
-  completeExperiment: () => set({ showResult: true })
+  completeExperiment: () => set({ showResult: true, visualPhase: 'completed', isStirring: false }),
+  closeResult: () => set({ showResult: false })
 }))
 

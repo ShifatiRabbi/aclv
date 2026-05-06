@@ -55,7 +55,7 @@ export const ControlPanel: React.FC = () => {
               return (
                 <button
                   key={tool.id}
-                  onClick={() => selectTool(tool.id)}
+                  onClick={() => selectTool(selectedTool === tool.id ? null : tool.id)}
                   className={cn(
                     'aspect-square rounded border flex items-center justify-center transition-all',
                     selectedTool === tool.id

@@ -15,17 +15,17 @@ type Page = 'home' | 'selection' | 'lab'
 
 export default function VirtualLabApp() {
   const [page, setPage] = React.useState<Page>('home')
-  const { currentExperiment, resetLab, showResult, setAllChemicals, setAllExperiments } = useLabStore()
+  const { currentExperiment, resetLab, showResult, setAllChemicals, setAllExperiments, closeResult } = useLabStore()
 
  React.useEffect(() => {
   getChemicals()
     .then((items) => setAllChemicals(items))
     .catch((err) => console.error('Chemical fetch error', err))
-  
+
   getReactions()
     .then((items) => setAllExperiments(items))
     .catch((err) => console.error('Experiment fetch error', err))
-}, [])
+}, [setAllChemicals, setAllExperiments])
 
   const handleReset = () => resetLab()
 
@@ -72,7 +72,7 @@ export default function VirtualLabApp() {
               </div>
               <ControlPanel />
             </main>
-            {showResult && <Result onReset={handleReset} onHome={handleHome} />}
+            {showResult && <Result onReset={handleReset} onHome={handleHome} onClose={closeResult} />}
           </motion.div>
         )}
       </AnimatePresence>
