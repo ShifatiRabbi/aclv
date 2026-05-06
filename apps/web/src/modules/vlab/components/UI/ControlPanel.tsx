@@ -72,7 +72,7 @@ export const ControlPanel: React.FC = () => {
         </div>
       </div>
 
-      <div className="h-48 bg-black/40 border-t border-white/10 p-5 font-mono text-[10px] leading-relaxed">
+      <div className="h-80 bg-black/40 border-t border-white/10 p-5 font-mono text-[10px] leading-relaxed overflow-y-scroll">
         <div className="flex items-center justify-between mb-3 opacity-40 uppercase tracking-widest font-black">
           <span>Action Log</span>
           <span className="animate-pulse">● Live</span>

@@ -9,7 +9,9 @@ interface LabStore extends LabState {
   updateLiquid: (level: number, color: string) => void
   setTitrating: (isTitrating: boolean) => void
   setTitrantVolume: (volume: number | ((prev: number) => number)) => void
+  setCurrentPH: (value: number) => void
   setPrecipitateProgress: (progress: number) => void
+  triggerDropAnimation: () => void
   setError: (error: string | null) => void
   setBuretteError: (hasError: boolean) => void
   setStirring: (isStirring: boolean) => void
@@ -42,7 +44,9 @@ const initialState: LabState = {
   isStirring: false,
   isTitrating: false,
   titrantVolume: 0,
+  currentPH: 7,
   precipitateProgress: 0,
+  dropAnimationTick: 0,
   error: null,
   buretteError: false,
   showResult: false,
@@ -84,7 +88,9 @@ export const useLabStore = create<LabStore>((set) => ({
     set((state) => ({
       titrantVolume: typeof titrantVolume === 'function' ? titrantVolume(state.titrantVolume) : titrantVolume
     })),
+  setCurrentPH: (currentPH) => set({ currentPH }),
   setPrecipitateProgress: (precipitateProgress) => set({ precipitateProgress }),
+  triggerDropAnimation: () => set((state) => ({ dropAnimationTick: state.dropAnimationTick + 1 })),
   setError: (error) => set({ error }),
   setBuretteError: (buretteError) => set({ buretteError }),
   setStirring: (isStirring) => set({ isStirring }),

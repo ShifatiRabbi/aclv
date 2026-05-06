@@ -15,7 +15,10 @@ export const useSimulation = () => {
     updateLiquid,
     liquidLevel,
     liquidColor,
+    currentPH,
+    setCurrentPH,
     setPrecipitateProgress,
+    triggerDropAnimation,
     setBuretteError,
     setTitrantVolume,
     setStirring,
@@ -35,6 +38,24 @@ export const useSimulation = () => {
       const chemDisplayName = selectedChemical ? selectedChemical.name : 'Unknown'
 
       const validation = SimulationEngine.validateAction(currentStep, action, chemDisplayName, selectedTool)
+
+      const updateReactionPH = (nextLevel: number, chemicalId: string) => {
+        const id = chemicalId.toLowerCase()
+        if (currentExperiment.id === 'acid_base_strong') {
+          return
+        }
+        if (id.includes('hcl')) {
+          setCurrentPH(Math.max(1.2, currentPH - Math.min(1.5, nextLevel / 100)))
+          return
+        }
+        if (id.includes('naoh')) {
+          setCurrentPH(Math.min(12.5, currentPH + Math.min(1.5, nextLevel / 100)))
+          return
+        }
+        if (id.includes('agno3')) {
+          setCurrentPH(Math.max(5.8, currentPH - 0.35))
+        }
+      }
 
       if (selectedChemical && selectedChemical.hazards.length > 0) {
         addHistory(`WARNING: ${chemDisplayName} is ${selectedChemical.hazards.join(', ')}.`)
@@ -63,6 +84,7 @@ export const useSimulation = () => {
           if (selectedChemical.id.toLowerCase().includes('hcl')) newColor = 'rgba(255, 255, 255, 0.1)'
           if (selectedChemical.id.toLowerCase().includes('nacl')) newColor = 'rgba(255, 255, 255, 0.15)'
           updateLiquid(newLevel, newColor)
+          updateReactionPH(newLevel, selectedChemical.id)
 
           // Simulates real-world swirling right after transfer for immediate visual feedback.
           setStirring(true)
@@ -74,14 +96,18 @@ export const useSimulation = () => {
         }
 
         if (action === 'drop') {
+          triggerDropAnimation()
           setVisualPhase('reacting')
+          updateReactionPH(liquidLevel, selectedChemical.id)
           if (selectedChemical.id.toLowerCase().includes('pheno')) {
             addHistory('Indicator added: Preparation complete.')
             updateLiquid(liquidLevel, 'rgba(255, 255, 255, 0.18)')
+            setCurrentPH(Math.max(2.8, currentPH - 0.1))
           }
           if (selectedChemical.id.toLowerCase().includes('agno3')) {
             setPrecipitateProgress(1.0)
             updateLiquid(liquidLevel, 'rgba(255, 255, 255, 0.8)')
+            setCurrentPH(Math.max(5.8, currentPH - 0.25))
             completeExperiment()
           }
         }
@@ -116,8 +142,11 @@ export const useSimulation = () => {
       addHistory,
       liquidLevel,
       liquidColor,
+      currentPH,
       updateLiquid,
+      setCurrentPH,
       setPrecipitateProgress,
+      triggerDropAnimation,
       setBuretteError,
       setTitrantVolume,
       setStirring,

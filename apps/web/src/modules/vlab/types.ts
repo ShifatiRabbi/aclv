@@ -57,7 +57,9 @@ export interface LabState {
   isStirring: boolean
   isTitrating: boolean
   titrantVolume: number
+  currentPH: number
   precipitateProgress: number
+  dropAnimationTick: number
   error: string | null
   buretteError: boolean
   showResult: boolean
