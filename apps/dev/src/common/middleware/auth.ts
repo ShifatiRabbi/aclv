@@ -41,3 +41,19 @@ export function authorize(...roles: UserRole[]) {
     next()
   }
 }
+
+export function authenticateOptional(req: AuthenticatedRequest, _res: Response, next: NextFunction) {
+  const token = getAccessToken(req)
+  if (!token) {
+    next()
+    return
+  }
+
+  try {
+    const secret = process.env.JWT_SECRET ?? 'reaxorium_dev_secret'
+    req.user = jwt.verify(token, secret) as AuthUserPayload
+  } catch {
+    req.user = undefined
+  }
+  next()
+}

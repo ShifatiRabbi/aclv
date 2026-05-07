@@ -10,6 +10,7 @@ import authRouter from './modules/auth/auth.route.ts'
 import promoRouter from './modules/promo/promo.route.ts'
 import referralsRouter from './modules/referrals/referrals.route.ts'
 import usersRouter from './modules/users/users.route.ts'
+import feedbackRouter from './modules/feedback/feedback.route.ts'
 import { seedLabDataIfEmpty, seedElementsIfEmpty } from './seed/seedLabData.ts'
 import { authService } from './modules/auth/auth.service.ts'
 
@@ -41,6 +42,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/promo-codes', promoRouter)
 app.use('/api/referrals', referralsRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/feedback', feedbackRouter)
 
 async function bootstrap() {
   try {

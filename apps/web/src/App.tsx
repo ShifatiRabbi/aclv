@@ -11,6 +11,7 @@ const VlabApp = lazy(() => import('./modules/vlab/App'))
 const HomePage = lazy(() => import('./modules/public/pages/HomePage'))
 const ElementsPage = lazy(() => import('./modules/elements/pages/ElementsPage'))
 const AdminDashboardPage = lazy(() => import('./modules/admin/pages/AdminDashboardPage'))
+const AdminFeedbackPage = lazy(() => import('./modules/admin/pages/AdminFeedbackPage'))
 const StudentDashboardPage = lazy(() => import('./modules/student/pages/StudentDashboardPage'))
 const TeacherDashboardPage = lazy(() => import('./modules/teacher/pages/TeacherDashboardPage'))
 const StaffDashboardPage = lazy(() => import('./modules/staff/pages/StaffDashboardPage'))
@@ -44,6 +45,7 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={['super_admin', 'admin']} />}>
             <Route path="/admin" element={<RoleLabLayout title="Admin Laboratory OS" />}>
               <Route index element={<AdminDashboardPage />} />
+              <Route path="feedback" element={<AdminFeedbackPage />} />
             </Route>
           </Route>
 
