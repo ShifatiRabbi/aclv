@@ -3,6 +3,12 @@ import { blogService } from '../modules/blogs/blog.service.ts'
 
 let isRunning = false
 
+/** ISO timestamp of last successful hybrid run that produced at least one blog */
+export let lastAutoBlogSuccessAt: string | null = null
+
+/** Summary payload from the last completed run */
+export let lastAutoBlogSummary: Record<string, unknown> | null = null
+
 export function startAutoBlogCron() {
   const enabled = process.env.AUTO_BLOG_ENABLED === 'true'
   const schedule = process.env.AUTO_BLOG_SCHEDULE ?? '0 */6 * * *'
@@ -30,12 +36,23 @@ export function startAutoBlogCron() {
 
     try {
       const result = await blogService.generateFromLatestNews({ autoPublish })
-      console.log('[cron:auto-blog] completed', {
+      const summary = {
         generated: result.generated,
         skipped: result.skipped,
         fetched: result.fetched,
-        durationMs: Date.now() - startedAt
-      })
+        publishMode: autoPublish ? 'auto' : 'draft',
+        durationMs: Date.now() - startedAt,
+        slugs: result.items.map((item: { slug?: string; contentSource?: string; topicKey?: string }) => ({
+          slug: item.slug,
+          contentSource: item.contentSource,
+          topicKey: item.topicKey
+        }))
+      }
+      lastAutoBlogSummary = summary
+      if (result.generated > 0) {
+        lastAutoBlogSuccessAt = new Date().toISOString()
+      }
+      console.log('[cron:auto-blog] completed', summary)
     } catch (error) {
       console.error('[cron:auto-blog] failed', { error, durationMs: Date.now() - startedAt })
     } finally {

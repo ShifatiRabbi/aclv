@@ -14,7 +14,7 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-async function getWithRetry(url: string, retries = 3, timeoutMs = 10000): Promise<any> {
+async function getWithRetry(url: string, retries = 3, timeoutMs = 12000): Promise<any> {
   let lastError: unknown
 
   for (let attempt = 1; attempt <= retries; attempt += 1) {
@@ -23,7 +23,7 @@ async function getWithRetry(url: string, retries = 3, timeoutMs = 10000): Promis
       return response.data
     } catch (error) {
       lastError = error
-      const waitMs = attempt * 500
+      const waitMs = attempt * 600
       console.error('[news] request failed', { attempt, waitMs, error })
       if (attempt < retries) {
         await sleep(waitMs)
@@ -50,20 +50,113 @@ function normalizeArticle(article: any): NewsArticle | null {
   }
 }
 
-export const newsService = {
-  async fetchLatestNews() {
-    const apiKey = process.env.NEWS_API_KEY
-    const categories = (process.env.NEWS_CATEGORIES ?? 'technology,science,business')
-      .split(',')
-      .map((item) => item.trim())
-      .filter(Boolean)
+const CHEMISTRY_SIGNAL_WORDS = [
+  'chem',
+  'molecule',
+  'compound',
+  'reaction',
+  'catalyst',
+  'polymer',
+  'organic',
+  'inorganic',
+  'nobel',
+  'synthesis',
+  'laboratory',
+  'lab',
+  'acid',
+  'base',
+  'ph ',
+  'ph.',
+  'ion',
+  'electron',
+  'atom',
+  'periodic',
+  'metal',
+  'oxide',
+  'nanomat',
+  'battery',
+  'electroly',
+  'fuel cell',
+  'enzyme',
+  'protein structure',
+  'crystall',
+  'solvent',
+  'toxic',
+  'hazard',
+  'pollut',
+  'climate',
+  'carbon',
+  'hydrogen',
+  'oxygen',
+  'nitrogen',
+  'fluorine',
+  'chlorine',
+  'sodium',
+  'lithium',
+  'copper',
+  'iron',
+  'gold',
+  'silver',
+  'chemical engineering',
+  'materials science'
+]
 
+function chemistryRelevanceScore(article: NewsArticle): number {
+  const blob = `${article.title} ${article.description} ${article.content}`.toLowerCase()
+  let score = 0
+  for (const word of CHEMISTRY_SIGNAL_WORDS) {
+    if (blob.includes(word)) {
+      score += 1
+    }
+  }
+  if (/\b\d{1,3}\s*(ppm|mol|molar|nm|µm|um|nanometer)\b/i.test(blob)) {
+    score += 2
+  }
+  return score
+}
+
+function defaultChemistryQueries(): string[] {
+  const fromEnv = process.env.CHEMISTRY_NEWS_QUERIES
+  if (fromEnv?.trim()) {
+    return fromEnv
+      .split('|')
+      .map((q) => q.trim())
+      .filter(Boolean)
+  }
+  return [
+    '("chemistry" OR "chemical reaction" OR "organic chemistry" OR "inorganic chemistry")',
+    '("periodic table" OR "chemical compound" OR "catalyst")',
+    '("materials science" AND ("chemistry" OR "chemical"))',
+    '("laboratory" AND ("chemistry" OR "chemical"))',
+    '("nanotechnology" OR "nanomaterial") AND chemistry',
+    '("environmental chemistry" OR "green chemistry")',
+    '("Nobel Prize" AND chemistry)'
+  ]
+}
+
+export const newsService = {
+  /**
+   * Chemistry-focused headlines via keyword queries (not generic category feeds).
+   * If NEWS_API_KEY is missing, returns [] so the hybrid engine can use educational mode.
+   */
+  async fetchChemistryNews(): Promise<NewsArticle[]> {
+    const apiKey = process.env.NEWS_API_KEY
     if (!apiKey) {
-      throw new Error('NEWS_API_KEY is not set')
+      console.log('[news] NEWS_API_KEY not set — skipping chemistry news fetch')
+      return []
     }
 
-    const requests = categories.map((category) => {
-      const url = `https://newsapi.org/v2/top-headlines?language=en&pageSize=10&category=${encodeURIComponent(category)}&apiKey=${apiKey}`
+    const queries = defaultChemistryQueries()
+    const lookbackDays = Math.min(30, Math.max(1, Number(process.env.CHEMISTRY_NEWS_LOOKBACK_DAYS ?? 7)))
+    const fromDate = new Date()
+    fromDate.setDate(fromDate.getDate() - lookbackDays)
+    const from = fromDate.toISOString().slice(0, 10)
+
+    const requests = queries.map((q) => {
+      const url =
+        `https://newsapi.org/v2/everything?` +
+        `q=${encodeURIComponent(q)}` +
+        `&language=en&sortBy=publishedAt&pageSize=12&from=${from}&apiKey=${apiKey}`
       return getWithRetry(url)
     })
 
@@ -77,11 +170,18 @@ export const newsService = {
           .filter((item): item is NewsArticle => Boolean(item))
         articles.push(...batch)
       } else {
-        console.error('[news] category fetch failed', { category: categories[index], reason: result.reason })
+        console.error('[news] chemistry query failed', { queryIndex: index, reason: result.reason })
       }
     })
 
     const uniqueByUrl = Array.from(new Map(articles.map((item) => [item.url, item])).values())
-    return uniqueByUrl.sort((a, b) => +new Date(b.publishedAt) - +new Date(a.publishedAt))
+    const scored = uniqueByUrl
+      .map((article) => ({ article, score: chemistryRelevanceScore(article) }))
+      .filter((row) => row.score >= 2)
+      .sort((a, b) => b.score - a.score || +new Date(b.article.publishedAt) - +new Date(a.article.publishedAt))
+
+    const meaningful = scored.map((row) => row.article)
+    console.log('[news] chemistry news candidates', { raw: uniqueByUrl.length, meaningful: meaningful.length })
+    return meaningful
   }
 }

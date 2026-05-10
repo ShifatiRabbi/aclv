@@ -79,8 +79,10 @@ export default function AdminDashboardPage() {
       <div className="glass-panel rounded-2xl border border-white/10 p-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h2 className="text-xl text-white font-semibold">AI Blog Automation</h2>
-            <p className="text-on-surface-variant mt-1">Generate from latest news and moderate drafts before publishing.</p>
+            <h2 className="text-xl text-white font-semibold">Chemistry AI Publishing</h2>
+            <p className="text-on-surface-variant mt-1">
+              Hybrid run: chemistry news (when available) → educational fallback from your periodic table data. Drafts default Bangla-first.
+            </p>
           </div>
           <button
             type="button"
@@ -88,7 +90,7 @@ export default function AdminDashboardPage() {
             disabled={busy}
             className="rounded-full px-5 py-2.5 bg-primary-container text-on-primary-container disabled:opacity-60"
           >
-            {busy ? 'Processing...' : 'Generate Blogs'}
+            {busy ? 'Processing...' : 'Run generation'}
           </button>
         </div>
 
@@ -99,8 +101,16 @@ export default function AdminDashboardPage() {
           {drafts.map((item) => (
             <div key={item._id} className="rounded-xl border border-white/10 p-4 flex flex-wrap items-center justify-between gap-3">
               <div>
-                <p className="text-white">{item.title}</p>
-                <p className="text-xs text-on-surface-variant mt-1">{item.category}</p>
+                <p className="text-white" style={{ fontFamily: "'Noto Sans Bengali', system-ui, sans-serif" }}>
+                  {item.title_bn ?? item.title ?? item.title_en}
+                </p>
+                <p className="text-xs text-on-surface-variant mt-1">
+                  {(item.category_bn ?? item.category ?? item.category_en) || '—'} · {item.contentSource ?? 'unknown'}
+                  {item.topicKey ? ` · ${item.topicKey}` : ''}
+                </p>
+                {item.title_en && (
+                  <p className="text-xs text-on-surface-variant mt-1 opacity-80">EN: {item.title_en}</p>
+                )}
               </div>
               <div className="flex gap-2">
                 <button
