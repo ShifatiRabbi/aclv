@@ -1,6 +1,68 @@
 import { NeonStatCard } from '../../dashboard/components/NeonStatCard'
+import { useEffect, useState } from 'react'
+import { blogApi } from '../../blogs/blog.service'
+import type { BlogItem } from '../../blogs/types'
 
 export default function AdminDashboardPage() {
+  const [blogs, setBlogs] = useState<BlogItem[]>([])
+  const [busy, setBusy] = useState(false)
+  const [message, setMessage] = useState('')
+
+  const loadBlogs = async () => {
+    const items = await blogApi.list(true)
+    setBlogs(items)
+  }
+
+  useEffect(() => {
+    loadBlogs().catch(() => {
+      setMessage('Failed to load blog moderation queue')
+    })
+  }, [])
+
+  const runGeneration = async () => {
+    setBusy(true)
+    setMessage('')
+    try {
+      await blogApi.generate()
+      await loadBlogs()
+      setMessage('Auto-generation run completed')
+    } catch {
+      setMessage('Generation failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const publishBlog = async (id: string) => {
+    setBusy(true)
+    setMessage('')
+    try {
+      await blogApi.publish(id)
+      await loadBlogs()
+      setMessage('Draft published')
+    } catch {
+      setMessage('Failed to publish draft')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const deleteBlog = async (id: string) => {
+    setBusy(true)
+    setMessage('')
+    try {
+      await blogApi.remove(id)
+      await loadBlogs()
+      setMessage('Blog deleted')
+    } catch {
+      setMessage('Delete failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const drafts = blogs.filter((item) => !item.published)
+
   return (
     <section className="space-y-6">
       <div className="glass-panel rounded-2xl border border-white/10 p-6">
@@ -12,6 +74,55 @@ export default function AdminDashboardPage() {
         <NeonStatCard label="Revenue" value="$42,980" hint="Active subscriptions" />
         <NeonStatCard label="Promo Conversions" value="2,940" hint="Campaign efficiency high" />
         <NeonStatCard label="Security Events" value="12" hint="All monitored and resolved" />
+      </div>
+
+      <div className="glass-panel rounded-2xl border border-white/10 p-6">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 className="text-xl text-white font-semibold">AI Blog Automation</h2>
+            <p className="text-on-surface-variant mt-1">Generate from latest news and moderate drafts before publishing.</p>
+          </div>
+          <button
+            type="button"
+            onClick={runGeneration}
+            disabled={busy}
+            className="rounded-full px-5 py-2.5 bg-primary-container text-on-primary-container disabled:opacity-60"
+          >
+            {busy ? 'Processing...' : 'Generate Blogs'}
+          </button>
+        </div>
+
+        {!!message && <p className="mt-3 text-sm text-on-surface-variant">{message}</p>}
+
+        <div className="mt-6 space-y-3">
+          {drafts.length === 0 && <p className="text-on-surface-variant">No drafts pending review.</p>}
+          {drafts.map((item) => (
+            <div key={item._id} className="rounded-xl border border-white/10 p-4 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-white">{item.title}</p>
+                <p className="text-xs text-on-surface-variant mt-1">{item.category}</p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => publishBlog(item._id)}
+                  disabled={busy}
+                  className="rounded-full px-4 py-2 bg-emerald-500/20 text-emerald-300 disabled:opacity-60"
+                >
+                  Publish
+                </button>
+                <button
+                  type="button"
+                  onClick={() => deleteBlog(item._id)}
+                  disabled={busy}
+                  className="rounded-full px-4 py-2 bg-red-500/20 text-red-300 disabled:opacity-60"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )

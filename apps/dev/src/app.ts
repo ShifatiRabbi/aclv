@@ -13,6 +13,8 @@ import usersRouter from './modules/users/users.route.ts'
 import feedbackRouter from './modules/feedback/feedback.route.ts'
 import { seedLabDataIfEmpty, seedElementsIfEmpty } from './seed/seedLabData.ts'
 import { authService } from './modules/auth/auth.service.ts'
+import blogRouter from './modules/blogs/blog.route.ts'
+import { startAutoBlogCron } from './cron/autoBlogCron.ts'
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -43,6 +45,7 @@ app.use('/api/promo-codes', promoRouter)
 app.use('/api/referrals', referralsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/feedback', feedbackRouter)
+app.use('/api/blogs', blogRouter)
 
 async function bootstrap() {
   try {
@@ -50,6 +53,7 @@ async function bootstrap() {
     await seedLabDataIfEmpty()
     await seedElementsIfEmpty()
     await authService.ensureDefaultSuperAdmin()
+    startAutoBlogCron()
   } catch (err) {
     console.error('Startup failed', err)
   }

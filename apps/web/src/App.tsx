@@ -20,6 +20,8 @@ const RegisterPage = lazy(() => import('./modules/auth/pages/RegisterPage'))
 const ForgotPasswordPage = lazy(() => import('./modules/auth/pages/ForgotPasswordPage'))
 const ResetPasswordPage = lazy(() => import('./modules/auth/pages/ResetPasswordPage'))
 const VerifyEmailPage = lazy(() => import('./modules/auth/pages/VerifyEmailPage'))
+const BlogListPage = lazy(() => import('./modules/blogs/pages/BlogListPage'))
+const BlogDetailPage = lazy(() => import('./modules/blogs/pages/BlogDetailPage'))
 
 function App() {
   useAuthBootstrap()
@@ -35,6 +37,8 @@ function App() {
             <Route path="/simulations" element={<VlabApp />} />
             <Route path="/elements" element={<ElementsPage />} />
             <Route path="/accessories" element={<AccessoriesApp />} />
+            <Route path="/blog" element={<BlogListPage />} />
+            <Route path="/blog/:slug" element={<BlogDetailPage />} />
             <Route path="/auth/login" element={<LoginPage />} />
             <Route path="/auth/register" element={<RegisterPage />} />
             <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
