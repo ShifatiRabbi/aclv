@@ -5,6 +5,8 @@ import { Flask } from '../Equipment/Flask'
 import { Burette } from '../Equipment/Burette'
 import { Dropper } from '../Equipment/Dropper'
 import { TestTube } from '../Equipment/TestTube'
+import { Beaker } from '../Equipment/Beaker'
+import { Pipette } from '../Equipment/Pipette'
 import { useSimulation } from '../../hooks/useSimulation'
 
 export const LabArea: React.FC = () => {
@@ -16,7 +18,9 @@ export const LabArea: React.FC = () => {
     isStirring,
     isTitrating,
     titrantVolume,
+    currentPH,
     setTitrantVolume,
+    setCurrentPH,
     setTitrating,
     updateLiquid,
     advanceStep,
@@ -25,7 +29,9 @@ export const LabArea: React.FC = () => {
     selectedChemicalId,
     allChemicals,
     buretteError,
-    completeExperiment
+    completeExperiment,
+    visualPhase,
+    dropAnimationTick
   } = useLabStore()
 
   const selectedChemical = React.useMemo(
@@ -43,20 +49,25 @@ export const LabArea: React.FC = () => {
 
     if (isTitrating && currentStep?.action === 'burette') {
       interval = setInterval(() => {
-        setTitrantVolume(titrantVolume + 0.1)
+        setTitrantVolume((prev) => {
+          const nextVolume = prev + 0.1
 
-        if (titrantVolume > 20 && titrantVolume < 25) {
-          updateLiquid(liquidLevel, `rgba(255, 45, 146, ${0.1 * Math.sin(titrantVolume * 10)})`)
-        }
-
-        if (titrantVolume >= 25) {
-          setTitrating(false)
-          updateLiquid(liquidLevel, 'rgba(255, 45, 146, 0.4)')
-          if (currentStep?.id === 'titrate') {
-            advanceStep()
-            completeExperiment()
+          if (nextVolume > 20 && nextVolume < 25) {
+            updateLiquid(liquidLevel, `rgba(255, 45, 146, ${0.1 * Math.sin(nextVolume * 10)})`)
           }
-        }
+          setCurrentPH(calculateTitrationPH(nextVolume))
+
+          if (nextVolume >= 25) {
+            setTitrating(false)
+            updateLiquid(liquidLevel, 'rgba(255, 45, 146, 0.4)')
+            if (currentStep?.id === 'titrate') {
+              advanceStep()
+              completeExperiment()
+            }
+          }
+
+          return nextVolume
+        })
       }, 50)
     }
     return () => {
@@ -64,23 +75,24 @@ export const LabArea: React.FC = () => {
     }
   }, [
     isTitrating,
-    titrantVolume,
     currentExperiment,
     setTitrantVolume,
+    setCurrentPH,
     updateLiquid,
     liquidLevel,
     setTitrating,
     currentStepIndex,
     completeExperiment,
-    advanceStep
+    advanceStep,
+    setCurrentPH
   ])
 
-  const calculatePH = () => {
+  const calculateTitrationPH = (baseVolume: number) => {
     if (currentExperiment?.id === 'acid_base_strong') {
       const v_acid = 25
       const c_acid = 0.1
       const c_base = 0.1
-      const v_base = titrantVolume
+      const v_base = baseVolume
 
       const moles_acid = (v_acid * c_acid) / 1000
       const moles_base = (v_base * c_base) / 1000
@@ -97,7 +109,7 @@ export const LabArea: React.FC = () => {
         return 14 - pOH
       }
     }
-    return 7.0
+    return currentPH
   }
 
   const handleEquipmentClick = (action: string) => {
@@ -122,7 +134,14 @@ export const LabArea: React.FC = () => {
           className="p-3 bg-black/60 backdrop-blur-md rounded-lg border border-white/10 flex items-center justify-between w-40 shadow-2xl"
         >
           <span className="text-[10px] text-white/40 font-bold uppercase tracking-widest">pH Level</span>
-          <span className="font-mono text-lg text-lab-status">{calculatePH().toFixed(2)}</span>
+          <motion.span
+            key={currentPH.toFixed(2)}
+            initial={{ y: 6, opacity: 0.4 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="font-mono text-lg text-lab-status"
+          >
+            {currentPH.toFixed(2)}
+          </motion.span>
         </motion.div>
         <motion.div
           initial={{ x: 20, opacity: 0 }}
@@ -140,13 +159,13 @@ export const LabArea: React.FC = () => {
       <div className="relative z-10 flex flex-col items-center gap-12">
         <div className="h-96 flex items-end">
           <AnimatePresence mode="wait">
-            {currentExperiment.type === 'titration' && (
+            {currentExperiment.type === 'titration' && selectedTool === 'burette' && (
               <motion.div
                 key="burette"
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -100, opacity: 0 }}
-                onClick={() => setTitrating(!isTitrating)}
+                onClick={() => handleEquipmentClick('burette')}
                 className="cursor-pointer"
               >
                 <Burette isTitrating={isTitrating} value={titrantVolume} onValueChange={setTitrantVolume} hasError={buretteError} />
@@ -161,7 +180,19 @@ export const LabArea: React.FC = () => {
                 onClick={() => handleEquipmentClick('drop')}
                 className="cursor-pointer"
               >
-                <Dropper chemicalColor="#4DA6FF" isActive={false} />
+                <Dropper chemicalColor={selectedChemical?.color || '#4DA6FF'} dropTrigger={dropAnimationTick} />
+              </motion.div>
+            )}
+
+            {selectedTool === 'beaker' && (
+              <motion.div key="beaker" initial={{ x: -60, opacity: 0 }} animate={{ x: -20, opacity: 1 }} className="mr-6">
+                <Beaker liquidColor={selectedChemical?.color || liquidColor} isActive={visualPhase === 'pouring' || visualPhase === 'mixing'} />
+              </motion.div>
+            )}
+
+            {selectedTool === 'pipette' && (
+              <motion.div key="pipette" initial={{ x: 60, opacity: 0 }} animate={{ x: 20, opacity: 1 }} className="ml-6">
+                <Pipette isActive={visualPhase === 'reacting' || visualPhase === 'mixing'} />
               </motion.div>
             )}
           </AnimatePresence>
@@ -178,6 +209,14 @@ export const LabArea: React.FC = () => {
             <Flask liquidLevel={liquidLevel} liquidColor={liquidColor} isStirring={isStirring} />
           ) : (
             <TestTube liquidLevel={liquidLevel} liquidColor={liquidColor} precipitateProgress={precipitateProgress} />
+          )}
+          {visualPhase !== 'idle' && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0.25, 0.4, 0.25] }}
+              transition={{ duration: 1.2, repeat: Infinity }}
+              className="absolute inset-0 rounded-full blur-2xl pointer-events-none bg-lab-accent/30"
+            />
           )}
         </motion.div>
 

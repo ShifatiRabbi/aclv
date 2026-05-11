@@ -57,11 +57,14 @@ export interface LabState {
   isStirring: boolean
   isTitrating: boolean
   titrantVolume: number
+  currentPH: number
   precipitateProgress: number
+  dropAnimationTick: number
   error: string | null
   buretteError: boolean
   showResult: boolean
   history: string[]
+  visualPhase: 'idle' | 'pouring' | 'mixing' | 'reacting' | 'completed'
 
   // Economy & User (placeholder; persisted in BE later)
   points: number

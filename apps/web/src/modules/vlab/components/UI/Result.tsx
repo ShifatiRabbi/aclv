@@ -6,12 +6,61 @@ import { useLabStore } from '../../store/useLabStore'
 interface ResultProps {
   onReset: () => void
   onHome: () => void
+  onClose: () => void
 }
 
-export const Result: React.FC<ResultProps> = ({ onReset, onHome }) => {
-  const { currentExperiment, showResult } = useLabStore()
+export const Result: React.FC<ResultProps> = ({ onReset, onHome, onClose }) => {
+  const { currentExperiment, showResult, titrantVolume, liquidLevel } = useLabStore()
 
   if (!currentExperiment || !showResult) return null
+
+  const buildReactionMath = () => {
+    if (currentExperiment.type === 'titration') {
+      const acidVolumeMl = 25
+      const acidMolarity = 0.1
+      const baseMolarity = 0.1
+      const usedBaseMl = Math.max(0, titrantVolume)
+      const acidMoles = (acidVolumeMl * acidMolarity) / 1000
+      const baseMoles = (usedBaseMl * baseMolarity) / 1000
+      const molarityDerived = usedBaseMl > 0 ? (baseMolarity * usedBaseMl) / acidVolumeMl : 0
+
+      return {
+        title: 'Step-by-Step Stoichiometric Calculation',
+        lines: [
+          `1) Balanced ratio from equation: HCl : NaOH = 1 : 1`,
+          `2) Known values: Va = ${acidVolumeMl.toFixed(2)} mL, Ma = ${acidMolarity.toFixed(3)} M, Mb = ${baseMolarity.toFixed(3)} M`,
+          `3) Titrant consumed at endpoint: Vb = ${usedBaseMl.toFixed(2)} mL`,
+          `4) Apply MaVa = MbVb -> Ma = (Mb * Vb) / Va`,
+          `5) Ma = (${baseMolarity.toFixed(3)} * ${usedBaseMl.toFixed(2)}) / ${acidVolumeMl.toFixed(2)} = ${molarityDerived.toFixed(4)} M`,
+          `6) Moles check: n(HCl) = ${acidMoles.toExponential(3)} mol, n(NaOH) = ${baseMoles.toExponential(3)} mol`,
+          `7) Interpretation: endpoint is reached when moles of base equal moles of acid.`
+        ],
+        metrics: [
+          { label: 'Measured NaOH Volume', value: `${usedBaseMl.toFixed(2)} mL` },
+          { label: 'Derived HCl Molarity', value: `${molarityDerived.toFixed(4)} M` },
+          { label: 'Total Mixture Volume', value: `${(acidVolumeMl + usedBaseMl).toFixed(2)} mL` }
+        ]
+      }
+    }
+
+    return {
+      title: 'Reaction Analysis',
+      lines: [
+        '1) Confirm reagent interaction from the balanced equation.',
+        '2) Identify the visible marker: precipitate, gas, or color shift.',
+        '3) Use the marker to conclude ion presence or reaction completion.',
+        '4) For precipitation reactions, product formation confirms the target ion.',
+        '5) Educational takeaway: qualitative tests are interpreted from observable evidence.'
+      ],
+      metrics: [
+        { label: 'Observed Liquid Fill', value: `${liquidLevel.toFixed(0)}%` },
+        { label: 'Reaction Outcome', value: currentExperiment.result.precipitate ? 'Precipitate formed' : 'Color/phase change observed' },
+        { label: 'Inference', value: 'Analyte confirmed by product evidence' }
+      ]
+    }
+  }
+
+  const reactionMath = buildReactionMath()
 
   return (
     <AnimatePresence>
@@ -70,7 +119,33 @@ export const Result: React.FC<ResultProps> = ({ onReset, onHome }) => {
               )}
             </div>
 
+            <div>
+              <h4 className="text-white/30 text-[10px] font-bold uppercase mb-4 tracking-widest">{reactionMath.title}</h4>
+              <div className="bg-slate-950/70 border border-white/10 rounded-2xl p-5 space-y-2">
+                {reactionMath.lines.map((line) => (
+                  <p key={line} className="text-xs text-slate-300 leading-relaxed font-mono">
+                    {line}
+                  </p>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {reactionMath.metrics.map((metric) => (
+                <div key={metric.label} className="rounded-xl border border-white/10 bg-white/5 p-4">
+                  <div className="text-[10px] uppercase tracking-widest text-white/40 font-bold">{metric.label}</div>
+                  <div className="text-sm text-white/90 font-semibold mt-1">{metric.value}</div>
+                </div>
+              ))}
+            </div>
+
             <div className="flex gap-4 pt-6">
+              <button
+                onClick={onClose}
+                className="py-4 px-6 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-2xl transition-all"
+              >
+                CLOSE
+              </button>
               <button
                 onClick={onReset}
                 className="flex-1 py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-3"

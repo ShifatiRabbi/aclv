@@ -8,13 +8,18 @@ interface LabStore extends LabState {
   advanceStep: () => void
   updateLiquid: (level: number, color: string) => void
   setTitrating: (isTitrating: boolean) => void
-  setTitrantVolume: (volume: number) => void
+  setTitrantVolume: (volume: number | ((prev: number) => number)) => void
+  setCurrentPH: (value: number) => void
   setPrecipitateProgress: (progress: number) => void
+  triggerDropAnimation: () => void
   setError: (error: string | null) => void
   setBuretteError: (hasError: boolean) => void
+  setStirring: (isStirring: boolean) => void
+  setVisualPhase: (phase: LabState['visualPhase']) => void
   addHistory: (entry: string) => void
   resetLab: () => void
   completeExperiment: () => void
+  closeResult: () => void
 
   addPoints: (points: number) => void
   deductPoints: (points: number) => void
@@ -39,11 +44,14 @@ const initialState: LabState = {
   isStirring: false,
   isTitrating: false,
   titrantVolume: 0,
+  currentPH: 7,
   precipitateProgress: 0,
+  dropAnimationTick: 0,
   error: null,
   buretteError: false,
   showResult: false,
   history: [],
+  visualPhase: 'idle',
   points: 1000,
   inventory: []
 }
@@ -76,10 +84,17 @@ export const useLabStore = create<LabStore>((set) => ({
 
   updateLiquid: (level, color) => set({ liquidLevel: level, liquidColor: color }),
   setTitrating: (isTitrating) => set({ isTitrating }),
-  setTitrantVolume: (titrantVolume) => set({ titrantVolume }),
+  setTitrantVolume: (titrantVolume) =>
+    set((state) => ({
+      titrantVolume: typeof titrantVolume === 'function' ? titrantVolume(state.titrantVolume) : titrantVolume
+    })),
+  setCurrentPH: (currentPH) => set({ currentPH }),
   setPrecipitateProgress: (precipitateProgress) => set({ precipitateProgress }),
+  triggerDropAnimation: () => set((state) => ({ dropAnimationTick: state.dropAnimationTick + 1 })),
   setError: (error) => set({ error }),
   setBuretteError: (buretteError) => set({ buretteError }),
+  setStirring: (isStirring) => set({ isStirring }),
+  setVisualPhase: (visualPhase) => set({ visualPhase }),
   addHistory: (entry) => set((state) => ({ history: [...state.history, entry] })),
 
   addPoints: (p) => set((state) => ({ points: state.points + p })),
@@ -92,6 +107,7 @@ export const useLabStore = create<LabStore>((set) => ({
       points: state.points
     })),
 
-  completeExperiment: () => set({ showResult: true })
+  completeExperiment: () => set({ showResult: true, visualPhase: 'completed', isStirring: false }),
+  closeResult: () => set({ showResult: false })
 }))
 
